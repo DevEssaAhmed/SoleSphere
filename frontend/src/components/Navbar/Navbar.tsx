@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link to='/'>Home</Link>
           </li>
           <li className='ml-5 hover:overline hover:text-[#9869ff]'>
-            <Link to='/shop'>Shop </Link>
+            <Link to='/shop'>Products </Link>
           </li>
           <li className='ml-5 hover:overline hover:text-[#9869ff]'>
             <Link to='/collection'>Collection</Link>

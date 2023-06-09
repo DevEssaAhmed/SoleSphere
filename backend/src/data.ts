@@ -1,6 +1,6 @@
 import { Product } from './types/Product';
 
-export const products: Product[] = [
+export const products: Product[] = [ 
   {
     name: 'Coffee Mug',
     slug: 'coffee-mug',
@@ -207,5 +207,4 @@ export const shopProducts: Product[] = [
     rating: '4.6',
     numReviews: 28,
   },
-
 ];

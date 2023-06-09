@@ -1,4 +1,4 @@
-
+import ProductList from '../../components/ProductList/ProductList';
 import Header from './Header';
 const HomePage = () => {
   return (
@@ -19,6 +19,7 @@ const HomePage = () => {
       </div>
       <div></div> */}
       <Header />
+      <ProductList />
     </>
   );
 };

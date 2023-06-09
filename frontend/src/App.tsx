@@ -3,6 +3,8 @@ import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
+import ProductPage from './pages/ProductPage/ProductPage';
+import ProductDetailsPage from './pages/ProductDetails/ProductDetailsPage';
 
 const AppLayout = () => {
   return (
@@ -32,14 +34,16 @@ const appRouter = createBrowserRouter([
       //   element: <AboutPage />,
       // },
       {
-        path: 'shop',
-        // element: <ShopPage />,
-        children: [],
+        path: 'product',
+        element: <ProductPage />,
+        children: [
+          {
+            path: ':slug',
+            element: <ProductDetailsPage />,
+          },
+        ],
       },
-      {
-        path: 'shop/:category',
-        // element: <CategoryPage />,
-      },
+
       {
         path: 'checkout',
         // element: <CheckoutPage />,
