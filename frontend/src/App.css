@@ -5,3 +5,12 @@
   text-align: center;
 }
  */
+
+ .shoe-bg {
+  background: url(/src/assets/shoe-strip.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-clip: content-box;
+
+ }

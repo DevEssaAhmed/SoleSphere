@@ -1,10 +1,11 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
-
+import './App.css'
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import ProductDetailsPage from './pages/ProductDetails/ProductDetailsPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 const AppLayout = () => {
   return (
@@ -22,7 +23,7 @@ const appRouter = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
