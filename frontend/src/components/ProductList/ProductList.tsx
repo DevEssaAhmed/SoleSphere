@@ -1,17 +1,23 @@
 import { products, shopProducts } from '../../data';
 import ProductCard from '../ProductCard/ProductCard';
 import { Link } from 'react-router-dom';
-const ProductList = () => {
+
+import { useGetProductsQuery } from '../../store/store';
+
+const ProductList = ({ sliceCount }) => {
+  // Receive sliceCount as a prop
+  const { data } = useGetProductsQuery();
+  console.log(data);
+
   return (
-    <div className='flex flex-wrap p-8 m-16 gap-16'>
-      {products.map((item) => {
+    <div className='flex flex-wrap justify-center items-center'>
+      {products.slice(0, sliceCount).map((item) => {
+        // Use sliceCount prop here
         return (
-          <div key={item.slug}>
-            <div>
-              <Link to={`product/${item.slug}`}>
-                <ProductCard item={item} />
-              </Link>
-            </div>
+          <div className='m-16' key={item.slug}>
+            <Link to={`product/${item.slug}`}>
+              <ProductCard item={item} />
+            </Link>
           </div>
         );
       })}

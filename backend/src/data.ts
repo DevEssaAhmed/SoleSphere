@@ -93,75 +93,7 @@ export const products: Product[] = [
     rating: '4.6',
     numReviews: 32,
   },
-  {
-    name: 'Sunglasses',
-    slug: 'sunglasses',
-    image:
-      'https://images.unsplash.com/photo-1521577352947-9bb58764b69a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VuZ2xhc3Nlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    category: 'Accessories',
-    brand: 'Ray-Ban',
-    price: 149.99,
-    countInStock: 12,
-    description:
-      'A pair of classic sunglasses with a metal frame and polarized lenses.',
-    rating: '4.4',
-    numReviews: 25,
-  },
-  {
-    name: 'Headphones',
-    slug: 'headphones',
-    image:
-      'https://images.unsplash.com/photo-1586953208448-b95a79798e8a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZHBob25lc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    category: 'Electronics',
-    brand: 'Sony',
-    price: 199.99,
-    countInStock: 10,
-    description:
-      'A pair of wireless headphones with noise-canceling technology and a long battery life.',
-    rating: '4.5',
-    numReviews: 30,
-  },
-  {
-    name: 'Plant',
-    slug: 'plant',
-    image:
-      'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGxhbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    category: 'Home & Garden',
-    brand: 'Planty',
-    price: 19.99,
-    countInStock: 15,
-    description: 'A potted plant with a green and white striped foliage.',
-    rating: '4.3',
-    numReviews: 20,
-  },
-  {
-    name: 'Car',
-    slug: 'car',
-    image:
-      'https://images.unsplash.com/photo-1541443131876-44b03de101c5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    category: 'Automotive',
-    brand: 'Tesla',
-    price: 49999.99,
-    countInStock: 2,
-    description:
-      'An electric car with a sleek design and a high-performance battery.',
-    rating: '4.9',
-    numReviews: 50,
-  },
-  {
-    name: 'Health Mask',
-    slug: 'health-mask',
-    image:
-      'https://images.unsplash.com/photo-1583947213589-d0d37143e013?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGVhbHRoJTIwbWFza3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    category: 'Health',
-    brand: 'Masky',
-    price: 4.99,
-    countInStock: 30,
-    description:
-      'A disposable mask with a three-layer protection and a comfortable fit.',
-    rating: '4.1',
-    numReviews: 27,
-  },
+
 ];
 
 export const shopProducts: Product[] = [

@@ -3,6 +3,11 @@ import { products } from './data';
 
 const app = express();
 
+
+
+
+
+
 app.get('/api/v1/products', (req: Request, res: Response) => {
   res.json(products);
 });

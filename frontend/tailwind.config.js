@@ -13,6 +13,6 @@ export default {
         // primary: '#fde047',
       },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/forms')],
   },
 };
