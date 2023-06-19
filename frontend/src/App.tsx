@@ -1,11 +1,13 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './App.css'
+import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import ProductDetailsPage from './pages/ProductDetails/ProductDetailsPage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import SignupPage from './pages/SignupPage/SignupPage';
 
 const AppLayout = () => {
   return (
@@ -49,15 +51,15 @@ const appRouter = createBrowserRouter([
         path: 'checkout',
         // element: <CheckoutPage />,
       },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'signup',
+        element: <SignupPage />,
+      },
     ],
-  },
-  {
-    path: '/login',
-    // element: <LoginPage />,
-  },
-  {
-    path: '/signup',
-    // element: <SignupPage />,
   },
 ]);
 
