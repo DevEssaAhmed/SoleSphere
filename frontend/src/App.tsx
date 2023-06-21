@@ -8,6 +8,7 @@ import ProductDetailsPage from './pages/ProductDetails/ProductDetailsPage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 
 const AppLayout = () => {
   return (
@@ -39,17 +40,16 @@ const appRouter = createBrowserRouter([
       {
         path: 'products',
         element: <ProductPage />,
-        children: [
-          {
-            path: ':slug',
-            element: <ProductDetailsPage />,
-          },
-        ],
+        children: [],
+      },
+      {
+        path: 'products/:slug',
+        element: <ProductDetailsPage />,
       },
 
       {
         path: 'checkout',
-        // element: <CheckoutPage />,
+        element: <CheckoutPage />,
       },
       {
         path: 'login',

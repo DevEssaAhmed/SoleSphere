@@ -15,7 +15,7 @@ const ProductList = ({ sliceCount }) => {
         // Use sliceCount prop here
         return (
           <div className='m-16' key={item.slug}>
-            <Link to={`product/${item.slug}`}>
+            <Link to={`/products/${item.slug}`}>
               <ProductCard item={item} />
             </Link>
           </div>
