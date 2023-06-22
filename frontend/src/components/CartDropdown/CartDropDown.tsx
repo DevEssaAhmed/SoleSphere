@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+
 // import CartItem from '../CartItem/CartItem';
 
 import { Link } from 'react-router-dom';
@@ -47,7 +47,7 @@ const CartDropDown = () => {
                 </p>
               </div>
               <div className='mt-6 text-center'>
-                <Link to='/checkout'>
+                <Link to='/cart'>
                   <button
                     type='button'
                     className='group inline-flex w-full items-center justify-center rounded-md bg-primary px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800'
