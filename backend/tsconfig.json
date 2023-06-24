@@ -1,0 +1,60 @@
+// {
+//   "compilerOptions": {
+//     "target": "esnext",
+//     "module": "commonjs",
+//     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+//     "skipLibCheck": true,
+//     "sourceMap": true,
+//     "outDir": "./build",
+//     "moduleResolution": "node",
+//     "removeComments": true,
+//     "noImplicitAny": true,
+//     "strictNullChecks": true,
+//     "strictFunctionTypes": true,
+//     "noImplicitThis": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "noImplicitReturns": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "allowSyntheticDefaultImports": true,
+//     "esModuleInterop": true,
+//     "emitDecoratorMetadata": true,
+//     "experimentalDecorators": true,
+//     "resolveJsonModule": true,
+
+//   },
+//   "exclude": ["node_modules"],
+//   "include": ["./server/src"]
+// }
+{
+  "compilerOptions": {
+    "target": "es2021", // Specifies the target version of JavaScript to compile to
+    "module": "NodeNext", // Sets the module format to use (for Node.js, use commonjs)
+    "lib": ["es2021"], // Sets the library files to include (for Node.js, use es20XX)
+    "sourceMap": true, // Enables source maps for debugging
+    "outDir": "./dist", // Specifies the output directory for compiled files
+    "rootDir": "./src", // Specifies the root directory of the TypeScript source files
+    "strict": true, // Enables strict type checking and other strict checks
+    "esModuleInterop": true, // Enables interoperability between CommonJS and ES6 modules
+    "resolveJsonModule": true, // Enables importing JSON files as modules
+    "declaration": true, // Generates declaration files for the compiled code
+    "declarationDir": "./types", // Specifies the output directory for declaration files
+    "noImplicitAny": true, // Flags any implicit 'any' types as errors
+    "noUnusedLocals": true, // Flags unused local variables as errors
+    "noUnusedParameters": true // Flags unused parameters as errors
+  },
+  "include": ["./src/**/*"], // Specifies the directories and files to include in compilation
+  "exclude": ["node_modules", "**/*.spec.ts"] // Specifies the directories and files to exclude from compilation
+}
+
+// {
+//   "compilerOptions": {
+//     "target": "es2015",
+//     "outDir": "./build",
+//     "strict": true,
+//     "module": "commonjs",
+//     "esModuleInterop": true,
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true
+//   }
+// }

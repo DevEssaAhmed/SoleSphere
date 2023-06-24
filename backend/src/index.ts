@@ -1,20 +1,29 @@
-import express, { Request, Response } from 'express';
-import { products } from './data';
-
-const app = express();
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-global-assign
 
 
+import path from 'path';
+import express from 'express';
 
+import dotenv from 'dotenv';
+dotenv.config();
 
+import { connectDB } from './config/connectDB';
+import { app } from './app';
 
+const port = process.env.PORT || 5000;
 
-app.get('/api/v1/products', (req: Request, res: Response) => {
-  res.json(products);
-});
+connectDB();
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, '/frontend/dist')));
 
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....');
+  });
+}
 
-const PORT = 5000 
-
-app.listen(PORT, () => {
-    console.log(`Server started running on port ${PORT}`)
-})
+app.listen(port, () => console.log(`Server started on port ${port}`));

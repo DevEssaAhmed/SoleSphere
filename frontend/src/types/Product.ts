@@ -20,6 +20,6 @@ export interface Product {
   price: number;
   countInStock: number;
   description: string;
-  rating: string;
+  rating: string | number;
   numReviews: number;
 }
