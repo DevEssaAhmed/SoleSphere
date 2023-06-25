@@ -1,6 +1,7 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
+
+// import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import ProductPage from './pages/ProductPage/ProductPage';
@@ -10,11 +11,12 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import CartPage from './pages/CartPage/CartPage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
+import Nav from './components/Nav/Nav';
 
 const AppLayout = () => {
   return (
     <div>
-      <Navbar />
+      <Nav />
       <Outlet />
       <Footer />
     </div>
