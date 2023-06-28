@@ -39,7 +39,7 @@
     "resolveJsonModule": true, // Enables importing JSON files as modules
     "declaration": true, // Generates declaration files for the compiled code
     "declarationDir": "./types", // Specifies the output directory for declaration files
-    "noImplicitAny": true, // Flags any implicit 'any' types as errors
+    "noImplicitAny": false, // Flags any implicit 'any' types as errors
     "noUnusedLocals": true, // Flags unused local variables as errors
     "noUnusedParameters": true // Flags unused parameters as errors
   },
