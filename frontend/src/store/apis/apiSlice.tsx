@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../../constants';
 
@@ -8,3 +9,8 @@ export const apiSlice = createApi({
   tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({}),
 });
+
+
+
+
+

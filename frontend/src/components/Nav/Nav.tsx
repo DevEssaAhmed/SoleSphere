@@ -127,10 +127,10 @@ const Nav = () => {
 
         <div
           className={`${
-            isMenuOpen ? 'right-0 h-screen z-20' : '-right-full'
-          } transition-all duration-500 mt-[60px] lg:mt-0 bg-white  flex flex-col w-full  lg:w-0 fixed top-0 bottom-0 gap-x-9 items-start justify-start`}
+            isMenuOpen ? 'right-0 h-screen' : 'hidden'
+          }z-20 overflow-hidden  transition-all duration-500 mt-[60px] lg:mt-0 bg-white  flex flex-col w-full   fixed top-0 bottom-0 gap-x-9 lg:hidden items-start justify-start`}
         >
-          <ul className='mt-8 text-black gap-y-6 flex flex-col  items-start   font-semibold'>
+          <ul className='mt-8 text-black gap-y-6 flex flex-col overflow-hidden  items-start   font-semibold'>
             {navItemLinks.map((item) => (
               <NavItem key={item.name} name={item.name} href={item.href} />
             ))}

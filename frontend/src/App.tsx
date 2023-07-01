@@ -1,6 +1,8 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import './App.css';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
@@ -16,13 +18,29 @@ import Nav from './components/Nav/Nav';
 const AppLayout = () => {
   return (
     <div>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
+      <Helmet>
+        <title>SoleSphere</title>
+        <meta name='description' content='curated sneakers store' />
+        {/* Add more meta tags as needed */}
+      </Helmet>
       <Nav />
       <Outlet />
       <Footer />
     </div>
   );
 };
-
 const appRouter = createBrowserRouter([
   // { path: "outlet", element: <Navbar /> },
 
