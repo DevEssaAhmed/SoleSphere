@@ -2,19 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
-
 
 /* @layer base {
   :root {
     --color-primary: 255 115 179;
     --color-secondary: 111 114 185;
     /* ... */
-  /* } */
+/* } */
 
+/* custom-styles.css */
+.bg-red {
+  background-color: red;
+}
+
+.bg-blue {
+  background-color: blue;
+}
+
+.bg-green {
+  background-color: green;
+}
+
+.bg-yellow {
+  background-color: yellow;
+}
+
+/* Define your border classes here if needed */
+/* Custom CSS classes for background colors using Tailwind color values */
+
+/* Red Background Colors */
+.custom-bg-red-200 {
+  background-color: #fecaca;
+}
+
+.custom-bg-red-500 {
+  background-color: #ef4444;
+}
+
+/* Green Background Colors */
+.custom-bg-green-200 {
+  background-color: #86efac;
+}
+
+.custom-bg-green-500 {
+  background-color: #10b981;
+}
+
+/* Blue Background Colors */
+.custom-bg-blue-200 {
+  background-color: #bfdbfe;
+}
+
+.custom-bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+/* Yellow Background Colors */
+.custom-bg-yellow-200 {
+  background-color: #fefcbf;
+}
+
+.custom-bg-yellow-500 {
+  background-color: #fde047;
+}
+/* Custom CSS classes for border colors using Tailwind color values */
+
+/* Red Border Colors */
+.custom-border-red-600 {
+  border-color: #ef4444;
+}
+
+/* Green Border Colors */
+.custom-border-green-600 {
+  border-color: #10b981;
+}
+
+/* Blue Border Colors */
+.custom-border-blue-600 {
+  border-color: #3b82f6;
+}
+
+/* Yellow Border Colors */
+.custom-border-yellow-600 {
+  border-color: #f59e0b;
+}

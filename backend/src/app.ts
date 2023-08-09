@@ -2,7 +2,7 @@ import cookieParser from 'cookie-parser';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import { notFound, errorHandler } from './middleware/errorMiddleware';
+import { notFound, errorHandler } from './middlewares/errorMiddleware';
 import userRoutes from '../src/routes/userRoutes';
 const app: Express = express();
 

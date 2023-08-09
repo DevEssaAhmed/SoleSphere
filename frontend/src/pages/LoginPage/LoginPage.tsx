@@ -1,25 +1,42 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import { useLoginMutation } from '../../store/apis/userApiSlice';
+import { setCredentials } from '../../store/slices/authSlice';
 
 import Logo from '../../assets/logo.svg';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+  const { userInfo } = useSelector((state: any) => state.auth);
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get('redirect') || '/';
+
   const defaultFormFields = {
     email: '',
     password: '',
   };
-
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate(redirect);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   const handleChange = (event) => {
@@ -27,9 +44,13 @@ const LoginPage = () => {
 
     setFormFields({ ...formFields, [name]: value });
   };
-
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
   return (
-    <div className='h-full bg-gray-50 pt-20'>
+    <div className='h-screen bg-gray-50 flex items-center justify-center'>
       <div className='flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
           <img className='mx-auto h-12 w-auto' src={Logo} alt='Fittire' />
@@ -97,14 +118,16 @@ const LoginPage = () => {
               <div>
                 <button
                   type='submit'
+                  disabled={isLoading}
                   className='flex w-full justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#47B5FF] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                 >
                   Sign in
                 </button>
+                {isLoading && <Loader />}
               </div>
             </form>
 
-            <div className='mt-6'>
+            {/* <div className='mt-6'>
               <div className='relative'>
                 <div className='absolute inset-0 flex items-center'>
                   <div className='w-full border-t border-gray-300' />
@@ -150,7 +173,7 @@ const LoginPage = () => {
                   ></path>
                 </svg>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

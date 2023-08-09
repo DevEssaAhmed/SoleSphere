@@ -28,7 +28,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-import User, { UserDocument } from '../model/userModel';
+import User, { UserDocument } from '../models/userModel';
 
 interface CustomRequest extends Request {
   user?: UserDocument | null;

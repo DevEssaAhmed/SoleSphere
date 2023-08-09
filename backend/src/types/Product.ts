@@ -13,13 +13,15 @@
 //! Using Interface which is a more extensible way for defining types
 export interface Product {
   name: string;
-  slug: string;
   image: string;
-  category: string;
+  description: string;
   brand: string;
+  category: string;
   price: number;
   countInStock: number;
-  description: string;
-  rating: string;
+
+  rating: number;
   numReviews: number;
+  size: Array<string>;
+  color: Array<string>;
 }

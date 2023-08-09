@@ -3,9 +3,9 @@ import HeaderImg from '../../assets/nike.png';
 const Header = () => {
   return (
     <div>
-      <div className='flex flex-col md:flex-row pt-16 sm:p-32 justify-center items-center container mx-auto'>
+      <div className='flex flex-col md:flex-row pt-16 md:pt-0 sm:p-32 sm:pb-0 justify-center items-center md:gap-8 container mx-auto'>
         <div className='section text-center sm:text-left mt-8 md:mt-0 md:w-1/2'>
-          <h1 className='text-4xl  md:text-8xl leading-[1.2] mb-4 md:mb-8 font-bold'>
+          <h1 className='text-3xl  md:text-7xl leading-[1.2] mb-4 md:mb-8 font-bold'>
             Find <span>your</span> <br />
             dream <span className='text-primary'>Sneakers</span>
           </h1>
@@ -19,12 +19,13 @@ const Header = () => {
             SHOP NOW
           </button>
         </div>
-        <div className='section hidden sm:block -mt-24 md:mt-0 shoe-bg bg-opacity-10 md:w-1/2 md:ml-8'>
+        
+        <div className='section  hidden  md:block -mt-24 md:mt-0 shoe-bg bg-opacity-10 md:w-1/2 md:ml-8'>
           <img className='' src={HeaderImg} alt='' />
         </div>
       </div>
 
-      <div className='flex flex-wrap sm:flex-row   justify-evenly mx-auto p-8 m-4 text-center container'>
+      <div className='flex flex-wrap sm:flex-row   justify-evenly mx-auto p-8 m-4  text-center container'>
         <div className='flex items-center  '>
           <div className='w-12 h-12  md:w-16 md:h-16 flex items-center justify-center bg-primary rounded-md m-2 md:m-4'>
             <i className='fa-solid fa-shield text-white fa-lg md:fa-2xl'></i>

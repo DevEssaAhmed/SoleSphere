@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from '../Rating/Rating';
 
 interface Product {
   image: string;
@@ -20,10 +21,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         <img className='max-w-full max-h-full w-3/4 ' src={image} alt='' />
       </div>
       <h1 className='font-bold'>{name}</h1>
-      <h2 className='text-yellow-400'>{rating}</h2>
+
+      <Rating value={rating} text={rating} />
+
       <div className='flex justify-around items-center w-full'>
-      <h3 className='text-primary font-semibold'>${price}</h3>
-    <button className='p-2 text-sm  bg-primary rounded-lg text-white'>Add to Cart <i className='fa-solid fa-cart-shopping'></i></button>
+        <h3 className='text-primary font-semibold'>${price}</h3>
+        <button className='p-2 text-sm  bg-primary rounded-lg text-white'>
+          Add to Cart <i className='fa-solid fa-cart-shopping'></i>
+        </button>
       </div>
     </div>
   );

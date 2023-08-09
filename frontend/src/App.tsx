@@ -1,4 +1,9 @@
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from 'react-router-dom';
 import Helmet from 'react-helmet';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
@@ -16,6 +21,34 @@ import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import Nav from './components/Nav/Nav';
 
 const AppLayout = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname.includes('/login');
+  const isSignupPage = location.pathname.includes('/signup');
+
+  if (isLoginPage || isSignupPage) {
+    return (
+      <div>
+        <ToastContainer
+          position='top-center'
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='light'
+        />
+        <Helmet>
+          <title>SoleSphere</title>
+          <meta name='description' content='curated sneakers store' />
+          {/* Add more meta tags as needed */}
+        </Helmet>
+        <Outlet />
+      </div>
+    );
+  }
   return (
     <div>
       <ToastContainer

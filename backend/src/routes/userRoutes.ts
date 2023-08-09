@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect, admin } from '../middleware/authMiddleware';
+import { protect, admin } from '../middlewares/authMiddleware';
 import {
   loginController,
   registerController,

@@ -1,273 +1,200 @@
+// import { useState } from 'react';
+// import { Link } from 'react-router-dom';
+// import { BsArrowLeftCircle } from 'react-icons/bs';
+
+// const ProductDetailsPage = () => {
+//   return (
+//     <div className=''>
+//       {/* Card Container */}
+//       <div className='flex items-center justify-center flex-col p-6 m-3 bg-white rounded-2xl md:flex-row md:m-0 md:p-16 md:space-x-6 md:gap-12'>
+//         {/* Image Div */}
+//         <div>
+//           <img
+//             src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+//             className='hover:scale-105 mx-auto duration-200 w-[45rem] rounded-lg'
+//           />
+//         </div>
+//         {/* Content */}
+//         <div className='flex flex-col  space-y-6'>
+//           {/* Label and Description Container */}
+//           <div className='flex flex-col mb-4 space-y-3 text-center md:text-left'>
+//             <div>
+//               <div className='inline-block px-3 py-1 text-sm text-white bg-black rounded-full'>
+//                 Free Shipping
+//               </div>
+//             </div>
+//             {/* Title */}
+//             <div className='max-w-sm text-2xl font-medium'>
+//               Razer Kraken Kitty Edt Gaming Headset Quartz
+//             </div>
+//             {/*Price Container  */}
+//             <div className='flex flex-col mb-4 space y-3 text-center md:text-left'>
+//               <p className='line-through'>$799</p>
+//               <p className='text-5xl font-bold'>$599</p>
+//               <p className='text-sm font-light text-gray-400'>
+//                 This offer is valid until April 3rd or as long as stock lasts
+//               </p>
+//             </div>
+//             {/* Button Group */}
+
+//             {/* Stock */}
+//             <div className='flex items-center space-x-3 group'>
+//               <div className='w-3 h-3 bg-green-400 rounded-full group-hover:animate-ping' />
+//               <div className='text-sm'>50+ pcs. in stock</div>
+//             </div>
+//             {/* Bottom Buttons Container */}
+//             <div className='flex flex-col space-y-4 md:space-y-0 md:space-x-4 md:flex-row'>
+//               <button className='bg-primary w-full flex items-center justify-center py-3 px-5 space-x-3 border-2 border-gray-300 rounded-lg shadow-sm hover:bg-opacity-90 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150'>
+//                 <img className='w-8' />
+//                 <span>Add to cart</span>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetailsPage;
 import { useState } from 'react';
-import { Disclosure, RadioGroup, Tab } from '@headlessui/react';
-import { StarIcon } from '@heroicons/react/20/solid';
-import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-
-const product = {
-  name: 'Zip Tote Basket',
-  price: '$140',
-  rating: 4,
-  images: [
-    {
-      id: 1,
-      name: 'Angled view',
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
-      alt: 'Angled front view with bag zipped and handles upright.',
-    },
-    // More images...
-  ],
-  colors: [
-    {
-      name: 'Washed Black',
-      bgColor: 'bg-gray-700',
-      selectedColor: 'ring-gray-700',
-    },
-    { name: 'White', bgColor: 'bg-white', selectedColor: 'ring-gray-400' },
-    {
-      name: 'Washed Gray',
-      bgColor: 'bg-gray-500',
-      selectedColor: 'ring-gray-500',
-    },
-  ],
-  description: `
-    <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
-  `,
-  details: [
-    {
-      name: 'Features',
-      items: [
-        'Multiple strap configurations',
-        'Spacious interior with top zip',
-        'Leather handle and tabs',
-        'Interior dividers',
-        'Stainless strap loops',
-        'Double stitched construction',
-        'Water-resistant',
-      ],
-    },
-    // More sections...
-  ],
-};
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+// import { Link } from 'react-router-dom';
+// import { BsArrowLeftCircle } from 'react-icons/bs';
+import Breadcrumb from '../../components/BreadCrumbs/BreadCrumbs';
 
 const ProductDetailsPage = () => {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  // State for selected size and color
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('Red'); // Set a default color
+
+  // Sample data for sizing and colors options
+  const sizes = ['US 7', 'US 8', 'US 9', 'US 10'];
+  const colors = ['Red', 'Blue', 'Green', 'Yellow'];
+
+  // Product description
+  const description = 'Short product description goes here.';
+
+  const breadcrumbs = [
+    { label: 'Home', path: '/' },
+    { label: 'Products', path: '/products' }, // Assuming you have a Products page
+    { label: 'Product Details' },
+  ];
+  // Sample stock count
+  let stockCount: number = 50;
 
   return (
-    <div className='bg-white mt-16'>
-      <div className='mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8'>
-        <div className='lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8'>
-          {/* Image gallery */}
-          <Tab.Group as='div' className='flex flex-col-reverse'>
-            {/* Image selector */}
-            <div className='mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none'>
-              <Tab.List className='grid grid-cols-4 gap-6'>
-                {product.images.map((image) => (
-                  <Tab
-                    key={image.id}
-                    className='relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4'
-                  >
-                    {({ selected }) => (
-                      <>
-                        <span className='sr-only'> {image.name} </span>
-                        <span className='absolute inset-0 overflow-hidden rounded-md'>
-                          <img
-                            src={image.src}
-                            alt=''
-                            className='h-full w-full object-cover object-center'
-                          />
-                        </span>
-                        <span
-                          className={classNames(
-                            selected ? 'ring-indigo-500' : 'ring-transparent',
-                            'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
-                          )}
-                          aria-hidden='true'
-                        />
-                      </>
-                    )}
-                  </Tab>
-                ))}
-              </Tab.List>
+    <div className=''>
+      {/* Breadcrumbs */}
+      <div className='py-4 mt-8 px-80'>
+        <Breadcrumb crumbs={breadcrumbs} />
+      </div>
+      {/* Go Back Button
+      <Link
+        to='/'
+        className='hidden md:block absolute top-15 left-30 text-3xl text-primary'
+      >
+        <BsArrowLeftCircle />
+      </Link> */}
+
+      {/* Card Container */}
+      <div className='flex items-center gap-y-4 justify-center flex-col p-6 m-3 bg-white rounded-2xl md:flex-row md:m-0 md:p-16 md:space-x-6 md:gap-12'>
+        {/* Image Div */}
+        <div>
+          <img
+            src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+            className='hover:scale-105 mx-auto duration-200 w-[45rem] rounded-lg'
+          />
+        </div>
+        {/* Content */}
+        <div className='flex flex-col  space-y-6'>
+          {/* Label and Description Container */}
+          <div className='flex flex-col mb-4 space-y-3 text-center md:text-left'>
+            <div>
+              <div className='inline-block px-3 py-1 text-sm text-white bg-black rounded-full'>
+                Free Shipping
+              </div>
             </div>
-
-            <Tab.Panels className='aspect-w-1 aspect-h-1 w-full'>
-              {product.images.map((image) => (
-                <Tab.Panel key={image.id}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className='h-full w-full object-cover object-center sm:rounded-lg'
-                  />
-                </Tab.Panel>
-              ))}
-            </Tab.Panels>
-          </Tab.Group>
-
-          {/* Product info */}
-          <div className='mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0'>
-            <h1 className='text-3xl font-bold tracking-tight text-gray-900'>
-              {product.name}
-            </h1>
-
-            <div className='mt-3'>
-              <h2 className='sr-only'>Product information</h2>
-              <p className='text-3xl tracking-tight text-gray-900'>
-                {product.price}
+            {/* Title */}
+            <div className='max-w-sm text-2xl font-medium'>
+              Razer Kraken Kitty Edt Gaming Headset Quartz
+            </div>
+            {/* Description */}
+            <div className='text-sm text-gray-600'>{description}</div>
+            {/* Price Container */}
+            <div className='flex flex-col mb-4 space y-3 text-center md:text-left'>
+              <p className='line-through'>$799</p>
+              <p className='text-5xl font-bold'>$599</p>
+              <p className='text-sm font-light text-gray-400'>
+                This offer is valid until April 3rd or as long as stock lasts
               </p>
             </div>
-
-            {/* Reviews */}
-            <div className='mt-3'>
-              <h3 className='sr-only'>Reviews</h3>
-              <div className='flex items-center'>
-                <div className='flex items-center'>
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      className={classNames(
-                        product.rating > rating
-                          ? 'text-indigo-500'
-                          : 'text-gray-300',
-                        'h-5 w-5 flex-shrink-0'
-                      )}
-                      aria-hidden='true'
-                    />
-                  ))}
-                </div>
-                <p className='sr-only'>{product.rating} out of 5 stars</p>
-              </div>
-            </div>
-
-            <div className='mt-6'>
-              <h3 className='sr-only'>Description</h3>
-
-              <div
-                className='space-y-6 text-base text-gray-700'
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              />
-            </div>
-
-            <form className='mt-6'>
-              {/* Colors */}
-              <div>
-                <h3 className='text-sm text-gray-600'>Color</h3>
-
-                <RadioGroup
-                  value={selectedColor}
-                  onChange={setSelectedColor}
-                  className='mt-2'
-                >
-                  <RadioGroup.Label className='sr-only'>
-                    {' '}
-                    Choose a color{' '}
-                  </RadioGroup.Label>
-                  <span className='flex items-center space-x-3'>
-                    {product.colors.map((color) => (
-                      <RadioGroup.Option
-                        key={color.name}
-                        value={color}
-                        className={({ active, checked }) =>
-                          classNames(
-                            color.selectedColor,
-                            active && checked ? 'ring ring-offset-1' : '',
-                            !active && checked ? 'ring-2' : '',
-                            '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none'
-                          )
-                        }
-                      >
-                        <RadioGroup.Label as='span' className='sr-only'>
-                          {' '}
-                          {color.name}{' '}
-                        </RadioGroup.Label>
-                        <span
-                          aria-hidden='true'
-                          className={classNames(
-                            color.bgColor,
-                            'h-8 w-8 border border-black border-opacity-10 rounded-full'
-                          )}
-                        />
-                      </RadioGroup.Option>
-                    ))}
-                  </span>
-                </RadioGroup>
-              </div>
-
-              <div className='sm:flex-col1 mt-10 flex'>
-                <button
-                  type='submit'
-                  className='flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full'
-                >
-                  Add to bag
-                </button>
-
-                <button
-                  type='button'
-                  className='ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500'
-                >
-                  <HeartIcon
-                    className='h-6 w-6 flex-shrink-0'
-                    aria-hidden='true'
-                  />
-                  <span className='sr-only'>Add to favorites</span>
-                </button>
-              </div>
-            </form>
-
-            <section aria-labelledby='details-heading' className='mt-12'>
-              <h2 id='details-heading' className='sr-only'>
-                Additional details
-              </h2>
-
-              <div className='divide-y divide-gray-200 border-t'>
-                {product.details.map((detail) => (
-                  <Disclosure as='div' key={detail.name}>
-                    {({ open }) => (
-                      <>
-                        <h3>
-                          <Disclosure.Button className='group relative flex w-full items-center justify-between py-6 text-left'>
-                            <span
-                              className={classNames(
-                                open ? 'text-indigo-600' : 'text-gray-900',
-                                'text-sm font-medium'
-                              )}
-                            >
-                              {detail.name}
-                            </span>
-                            <span className='ml-6 flex items-center'>
-                              {open ? (
-                                <MinusIcon
-                                  className='block h-6 w-6 text-indigo-400 group-hover:text-indigo-500'
-                                  aria-hidden='true'
-                                />
-                              ) : (
-                                <PlusIcon
-                                  className='block h-6 w-6 text-gray-400 group-hover:text-gray-500'
-                                  aria-hidden='true'
-                                />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel
-                          as='div'
-                          className='prose prose-sm pb-6'
-                        >
-                          <ul role='list'>
-                            {detail.items.map((item) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
+            {/* Sizing Options */}
+            <div>
+              <p className='text-lg font-medium'>Select Size:</p>
+              <div className='flex space-x-4'>
+                {sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-4 py-2 rounded-full ${
+                      selectedSize === size
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-200'
+                    }`}
+                  >
+                    {size}
+                  </button>
                 ))}
               </div>
-            </section>
+            </div>
+            {/* Colors Options */}
+            <div>
+              <p className='text-lg font-medium'>Select Color:</p>
+              <div className='flex space-x-4'>
+                {colors.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-8 h-8 rounded-full ${
+                      selectedColor === color
+                        ? `custom-bg-${color.toLowerCase()}-500 border-primary border-4`
+                        : `custom-bg-${color.toLowerCase()}-500`
+                    }`}
+                  ></button>
+                ))}
+              </div>
+            </div>
+            {/* Stock */}
+            <div className='flex items-center space-x-3 group'>
+              <div
+                className={`w-3 h-3 rounded-full ${
+                  stockCount > 0
+                    ? 'bg-green-400 group-hover:animate-ping'
+                    : 'bg-red-400'
+                }`}
+              />
+              <div
+                className={`text-sm ${
+                  stockCount > 0 ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
+                {stockCount > 0
+                  ? `${stockCount} pcs. in stock`
+                  : 'Out of stock'}
+              </div>
+            </div>
+            {/* Bottom Buttons Container */}
+            <div className='flex flex-col space-y-4 md:space-y-0 md:space-x-4 md:flex-row'>
+              <button
+                className={`bg-primary w-full flex items-center justify-center py-3 px-5 space-x-3 border-2 border-gray-300 rounded-lg shadow-sm hover:bg-opacity-90 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 ${
+                  stockCount === 0 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={stockCount === 0}
+              >
+                <img className='w-8' />
+                <span>Add to cart</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -275,5 +202,4 @@ const ProductDetailsPage = () => {
   );
 };
 
-
-export default ProductDetailsPage
+export default ProductDetailsPage;

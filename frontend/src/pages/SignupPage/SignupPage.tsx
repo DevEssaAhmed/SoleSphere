@@ -69,20 +69,25 @@ const SignupPage = () => {
     // ! The below function extracts value from the name then set it to the current value of the event. For example name is displayName and value is Essa so it will update the name value in formFields to Essa and since we are using vales from formfields in input so it will update the,
 
     // Check password validity
-    if (password.length === 0) {
-      setPasswordError('Password is required.');
-    } else if (
-      !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(
-        password
-      )
-    ) {
-      setPasswordError(
-        'Password requirements not met. Please follow the specified conditions.'
-      );
-    } else {
-      setPasswordError('');
+    let error = '';
+    if (name === 'password') {
+      if (value.length === 0) {
+        error = 'Password is required.';
+      } else if (
+        !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(
+          value
+        )
+      ) {
+        error =
+          'Password requirements not met. Please follow the specified conditions.';
+      }
     }
-    setFormFields({ ...formFields, [name]: value });
+    setFormFields((prevFormFields) => ({
+      ...prevFormFields,
+      [name]: value,
+    }));
+
+    setPasswordError(error);
   };
 
   return (
@@ -165,6 +170,26 @@ const SignupPage = () => {
                   )}
                   {password && (
                     <div className='flex flex-col mt-1'>
+                      <div className='flex items-center mr-4'>
+                        {isRequirementMet(/(?=.{8,})/) ? (
+                          <div className='rounded-full h-4 w-4 bg-green-500 flex items-center justify-center mr-2'>
+                            <span className='text-white'>✓</span>
+                          </div>
+                        ) : (
+                          <div className='rounded-full h-4 w-4 bg-red-500 flex items-center justify-center mr-2'>
+                            <span className='text-white'>×</span>
+                          </div>
+                        )}
+                        <span
+                          className={
+                            isRequirementMet(/(?=.{8,})/)
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          }
+                        >
+                          At least 8 letters
+                        </span>
+                      </div>
                       <div className='flex items-center mr-4'>
                         {isRequirementMet(/(?=.*[a-z])/) ? (
                           <div className='rounded-full h-4 w-4 bg-green-500 flex items-center justify-center mr-2'>

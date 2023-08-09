@@ -64,7 +64,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className='container mx-auto backdrop-blur-md  px-5  h-20 flex flex-row justify-between items-center '>
+      <nav className='sticky top-0 right-0 left-0 bg-white z-50 container mx-auto backdrop-blur-md  px-5  h-20 flex flex-row justify-between items-center '>
         {/*WideScreen Navigation  */}
 
         <Link to='/'>
@@ -75,7 +75,38 @@ const Nav = () => {
           {isMenuOpen ? (
             <FaXmark className='w-6 h-6' onClick={toggleIsMenuOpen} />
           ) : (
-            <FaBarsStaggered className='w-6 h-6' onClick={toggleIsMenuOpen} />
+            <div className='flex space-x-4'>
+              <Link to='/cart' ref={cartRef} className='hover:text-[#9869ff]'>
+                <i className='fa-solid fa-cart-shopping'></i>
+                {isCartOpen && <CartDropDown />}
+              </Link>
+
+              <button className='relative'>
+                <div
+                  className='cursor-pointer'
+                  ref={profileRef}
+                  onClick={toggleIsProfileOpen}
+                >
+                  {/* Profile Avatar */}
+                  {/* <img
+                  src='dummy-avatar.png'
+                  alt='Avatar'
+                  className='w-8 h-8 rounded-full'
+                /> */}
+                  <i className='fa-solid fa-user'></i>
+                </div>
+                {isProfileOpen && (
+                  // <div className='absolute right-0 mt-2 bg-white rounded shadow-md'>
+                  //   <ul className='py-2'>
+                  //     <li className='px-4 py-2 hover:bg-gray-100'>Settings</li>
+                  //     <li className='px-4 py-2 hover:bg-gray-100'>Sign Out</li>
+                  //   </ul>
+                  // </div>
+                  <ProfileDropDown />
+                )}
+              </button>
+              <FaBarsStaggered className='w-6 h-6' onClick={toggleIsMenuOpen} />
+            </div>
           )}
         </div>
 
@@ -127,8 +158,8 @@ const Nav = () => {
 
         <div
           className={`${
-            isMenuOpen ? 'right-0 h-screen' : 'hidden'
-          }z-20 overflow-hidden  transition-all duration-500 mt-[60px] lg:mt-0 bg-white  flex flex-col w-full   fixed top-0 bottom-0 gap-x-9 lg:hidden items-start justify-start`}
+            isMenuOpen ? 'right-0 ' : 'right-full'
+          } h-screen z-20 overflow-hidden  transition-all duration-500 mt-[60px] lg:mt-0 bg-white  flex flex-col w-full   fixed top-0 bottom-0 gap-x-9 lg:hidden items-start justify-start`}
         >
           <ul className='mt-8 text-black gap-y-6 flex flex-col overflow-hidden  items-start   font-semibold'>
             {navItemLinks.map((item) => (
