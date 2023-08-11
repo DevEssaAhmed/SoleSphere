@@ -3,7 +3,8 @@ import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { notFound, errorHandler } from './middlewares/errorMiddleware';
-import userRoutes from '../src/routes/userRoutes';
+import userRoutes from './routes/userRoutes';
+import productRoutes from './routes/productRoutes';
 const app: Express = express();
 
 // Middlewares
@@ -16,6 +17,7 @@ app.use(morgan('dev'));
 
 // // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/products', productRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

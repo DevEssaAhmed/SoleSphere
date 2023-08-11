@@ -13,3 +13,17 @@
   background-position: center;
   background-clip: content-box;
 }
+
+.brand-logo {
+  filter: grayscale(100%);
+  outline: none;
+
+  padding: 40px;
+}
+
+.brand-logo:fcous {
+  outline: none;
+}
+.grayscale-margin {
+  margin: 0 40px; /* Adjust the margin as per your requirements */
+}

@@ -1,4 +1,5 @@
 import HeaderImg from '../../assets/nike.png';
+import LogoSlider from '../../components/Slider/Slider';
 
 const Header = () => {
   return (
@@ -19,11 +20,17 @@ const Header = () => {
             SHOP NOW
           </button>
         </div>
-        
+
         <div className='section  hidden  md:block -mt-24 md:mt-0 shoe-bg bg-opacity-10 md:w-1/2 md:ml-8'>
           <img className='' src={HeaderImg} alt='' />
         </div>
       </div>
+
+  <div className='max-w-6xl mx-auto'>
+
+        <LogoSlider />
+  </div>
+    
 
       <div className='flex flex-wrap sm:flex-row   justify-evenly mx-auto p-8 m-4  text-center container'>
         <div className='flex items-center  '>

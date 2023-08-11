@@ -1,18 +1,42 @@
-import { PRODUCTS_URL } from '../../constants';
-import { apiSlice } from './apiSlice';
+import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
-const productsApiSlice = apiSlice.injectEndpoints({
+// Assuming these constants are defined correctly
+import { PRODUCTS_URL, BASE_URL } from '../../constants';
+
+interface IProduct {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  brand: string;
+  category: string;
+  price: number;
+  countInStock: number;
+  rating: number;
+  numReviews: number;
+  size: Array<string>;
+  color: Array<string>;
+}
+
+const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
+
+const productsApiSlice = createApi({
+  baseQuery,
+  tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getProducts: builder.query<IProduct[], void>({
       query: () => ({
         url: PRODUCTS_URL,
+        // You can add query parameters here if needed, like:
         // params: { keyword, pageNumber },
       }),
+      transformResponse: (response: IProduct[]) => response,
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),
   }),
 });
 
+// Export the generated hooks and slice
 export const { useGetProductsQuery } = productsApiSlice;
-export { productsApiSlice } 
+export { productsApiSlice };

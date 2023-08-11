@@ -2,35 +2,6 @@ import { Product } from '../types/Product';
 
 export const products: Product[] = [
   {
-    name: 'Nike Air Max 90 GTX',
-    image: '/images/nike-air-max-90-gtx.jpg',
-    description:
-      'The Nike Air Max 90 GTX is a classic sneaker with a waterproof twist. The GORE-TEX upper keeps your feet dry while the Air unit in the heel provides cushioning and comfort.',
-    brand: 'Nike',
-    category: 'Sneakers',
-    price: 160.0,
-    countInStock: 10,
-    rating: 4.5,
-    numReviews: 12,
-    size: ['7', '8', '9', '10', '11', '12'],
-    color: ['Black', 'White', 'Red', 'Blue'],
-  },
-  {
-    name: 'Adidas Ultraboost 21',
-    image: '/images/adidas-ultraboost-21.jpg',
-    description:
-      'The Adidas Ultraboost 21 is a high-performance running shoe that delivers energy return and support. The Boost midsole and Primeknit upper provide a responsive and adaptive fit.',
-    brand: 'Adidas',
-    category: 'Running Shoes',
-    price: 180.0,
-    countInStock: 7,
-    rating: 4.0,
-    numReviews: 8,
-    size: ['6', '7', '8', '9', '10'],
-    color: ['White', 'Black', 'Pink'],
-  },
-
-  {
     name: "Air Jordan 1 Retro High OG 'Shadow' 2018",
     image:
       'https://image.goat.com/750/attachments/product_template_pictures/images/011/119/994/original/218099_00.png.png',

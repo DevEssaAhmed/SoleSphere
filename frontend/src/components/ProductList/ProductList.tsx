@@ -1,21 +1,30 @@
-import { products, shopProducts } from '../../data';
+// import { products, shopProducts } from '../../data';
 import ProductCard from '../ProductCard/ProductCard';
 import { Link } from 'react-router-dom';
 
-import { useGetProductsQuery } from '../../store/store';
+import { useGetProductsQuery } from '../../store/apis/productsApiSlice';
+import Loader from '../Loader/Loader';
 
 const ProductList = ({ sliceCount }) => {
   // Receive sliceCount as a prop
-  const { data } = useGetProductsQuery();
+  const { data, isLoading, isError } = useGetProductsQuery();
+
   console.log(data);
 
+  if (isLoading) {
+    return <div><Loader/></div>;
+  }
+
+  if (isError) {
+    return <div>Error: {isError}</div>;
+  }
   return (
     <div className='flex flex-wrap justify-center items-center'>
-      {products.slice(0, sliceCount).map((item) => {
+      {data.slice(0, sliceCount).map((item) => {
         // Use sliceCount prop here
         return (
-          <div className='m-16' key={item.slug}>
-            <Link to={`/products/${item.slug}`}>
+          <div className='m-16' key={item._id}>
+            <Link to={`/products/${item._id}`}>
               <ProductCard item={item} />
             </Link>
           </div>

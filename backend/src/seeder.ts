@@ -1,14 +1,13 @@
 // import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-// import colors from 'colors';
+dotenv.config();
+import colors from 'colors';
 import users from './data/users';
 import { products } from './data/products';
 import User from './models/userModel';
 import Product from './models/productModel';
 import Order from './models/orderModel';
 import { connectDB } from './config/connectDB';
-
-dotenv.config();
 
 connectDB();
 
@@ -28,10 +27,12 @@ const importData = async () => {
 
     await Product.insertMany(sampleProducts);
 
-    console.log('Data Imported!'.green.inverse);
+    console.log('Data Imported!'.green);
+    console.log(colors.green.inverse(`Data Imported!`));
+
     process.exit();
   } catch (error) {
-    console.error(`${error}`.red.inverse);
+    console.error(`${error}`.red);
     process.exit(1);
   }
 };
