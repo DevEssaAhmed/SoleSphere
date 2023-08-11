@@ -92,3 +92,355 @@
 .custom-border-yellow-600 {
   border-color: #f59e0b;
 }
+/* Color Palette */
+
+/* Red */
+.custom-bg-red-50 {
+  background-color: #fef2f2;
+}
+
+.custom-bg-red-100 {
+  background-color: #fee2e2;
+}
+
+.custom-bg-red-200 {
+  background-color: #fecaca;
+}
+
+.custom-bg-red-300 {
+  background-color: #fca5a5;
+}
+
+.custom-bg-red-400 {
+  background-color: #f87171;
+}
+
+.custom-bg-red-500 {
+  background-color: #ef4444;
+}
+
+.custom-bg-red-600 {
+  background-color: #dc2626;
+}
+
+.custom-bg-red-700 {
+  background-color: #b91c1c;
+}
+
+.custom-bg-red-800 {
+  background-color: #991b1b;
+}
+
+.custom-bg-red-900 {
+  background-color: #7f1d1d;
+}
+
+/* Blue */
+.custom-bg-blue-50 {
+  background-color: #eff6ff;
+}
+
+.custom-bg-blue-100 {
+  background-color: #dbeafe;
+}
+
+.custom-bg-blue-200 {
+  background-color: #bfdbfe;
+}
+
+.custom-bg-blue-300 {
+  background-color: #93c5fd;
+}
+
+.custom-bg-blue-400 {
+  background-color: #60a5fa;
+}
+
+.custom-bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+.custom-bg-blue-600 {
+  background-color: #2563eb;
+}
+
+.custom-bg-blue-700 {
+  background-color: #1d4ed8;
+}
+
+.custom-bg-blue-800 {
+  background-color: #1e40af;
+}
+
+.custom-bg-blue-900 {
+  background-color: #1e3a8a;
+}
+
+/* Green */
+.custom-bg-green-50 {
+  background-color: #f0fdf4;
+}
+
+.custom-bg-green-100 {
+  background-color: #dcfccb;
+}
+
+.custom-bg-green-200 {
+  background-color: #bbf7d0;
+}
+
+.custom-bg-green-300 {
+  background-color: #86efac;
+}
+
+.custom-bg-green-400 {
+  background-color: #4ade80;
+}
+
+.custom-bg-green-500 {
+  background-color: #22c55e;
+}
+
+.custom-bg-green-600 {
+  background-color: #16a34a;
+}
+
+.custom-bg-green-700 {
+  background-color: #15803d;
+}
+
+.custom-bg-green-800 {
+  background-color: #166534;
+}
+
+.custom-bg-green-900 {
+  background-color: #14532d;
+}
+
+/* Purple */
+.custom-bg-purple-50 {
+  background-color: #f5f3ff;
+}
+
+.custom-bg-purple-100 {
+  background-color: #ede9fe;
+}
+
+.custom-bg-purple-200 {
+  background-color: #ddd6fe;
+}
+
+.custom-bg-purple-300 {
+  background-color: #c4b5fd;
+}
+
+.custom-bg-purple-400 {
+  background-color: #a78bfa;
+}
+
+.custom-bg-purple-500 {
+  background-color: #8b5cf6;
+}
+
+.custom-bg-purple-600 {
+  background-color: #7c3aed;
+}
+
+.custom-bg-purple-700 {
+  background-color: #6d28d9;
+}
+
+.custom-bg-purple-800 {
+  background-color: #5b21b6;
+}
+
+.custom-bg-purple-900 {
+  background-color: #4c1d95;
+}
+
+/* Orange */
+.custom-bg-orange-50 {
+  background-color: #fff7ed;
+}
+
+.custom-bg-orange-100 {
+  background-color: #ffedd5;
+}
+
+.custom-bg-orange-200 {
+  background-color: #fed7aa;
+}
+
+.custom-bg-orange-300 {
+  background-color: #fdba74;
+}
+
+.custom-bg-orange-400 {
+  background-color: #fb923c;
+}
+
+.custom-bg-orange-500 {
+  background-color: #f97316;
+}
+
+.custom-bg-orange-600 {
+  background-color: #ea580c;
+}
+
+.custom-bg-orange-700 {
+  background-color: #c2410c;
+}
+
+.custom-bg-orange-800 {
+  background-color: #9a3412;
+}
+
+.custom-bg-orange-900 {
+  background-color: #7c2d12;
+}
+
+/* Pink */
+.custom-bg-pink-50 {
+  background-color: #fdf2f8;
+}
+
+.custom-bg-pink-100 {
+  background-color: #fce7f3;
+}
+
+.custom-bg-pink-200 {
+  background-color: #fbcfe8;
+}
+
+.custom-bg-pink-300 {
+  background-color: #f9a8d4;
+}
+
+.custom-bg-pink-400 {
+  background-color: #f472b6;
+}
+
+.custom-bg-pink-500 {
+  background-color: #ec4899;
+}
+
+.custom-bg-pink-600 {
+  background-color: #db2777;
+}
+
+.custom-bg-pink-700 {
+  background-color: #be185d;
+}
+
+.custom-bg-pink-800 {
+  background-color: #9d174d;
+}
+
+.custom-bg-pink-900 {
+  background-color: #831843;
+}
+
+/* Gray */
+.custom-bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.custom-bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.custom-bg-gray-200 {
+  background-color: #e5e7eb;
+}
+
+.custom-bg-gray-300 {
+  background-color: #d1d5db;
+}
+
+.custom-bg-gray-400 {
+  background-color: #9ca3af;
+}
+
+.custom-bg-gray-500 {
+  background-color: #6b7280;
+}
+
+.custom-bg-gray-600 {
+  background-color: #4b5563;
+}
+
+.custom-bg-gray-700 {
+  background-color: #374151;
+}
+
+.custom-bg-gray-800 {
+  background-color: #1f2937;
+}
+
+.custom-bg-gray-900 {
+  background-color: #111827;
+}
+
+
+
+
+
+
+
+
+/* Single Shade Color Palette */
+
+/* Red */
+.custom-bg-red-500 {
+  background-color: #ff0000;
+}
+
+/* Green */
+.custom-bg-green-500 {
+  background-color: #00ff00;
+}
+
+/* Blue */
+.custom-bg-blue-500 {
+  background-color: #0000ff;
+}
+
+/* Yellow */
+.custom-bg-yellow-500 {
+  background-color: #ffff00;
+}
+
+/* Orange */
+.custom-bg-orange-500 {
+  background-color: #ff9900;
+}
+
+/* Purple */
+.custom-bg-purple-500 {
+  background-color: #9900cc;
+}
+
+/* Pink */
+.custom-bg-pink-500 {
+  background-color: #ff00cc;
+}
+
+/* Brown */
+.custom-bg-brown-500 {
+  background-color: #996633;
+}
+
+/* Gray */
+.custom-bg-gray-500 {
+  background-color: #808080;
+}
+
+/* Black */
+.custom-bg-black-500 {
+  background-color: #000000;
+}
+
+/* White */
+.custom-bg-white-500 {
+  background-color: #ffffff;
+}

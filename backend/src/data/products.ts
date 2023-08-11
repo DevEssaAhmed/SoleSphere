@@ -13,8 +13,8 @@ export const products: Product[] = [
     countInStock: 7,
     rating: 4.0,
     numReviews: 8,
-    size: ['10', '10.5', '11', '11.5', '12'],
-    color: ['Black'],
+    sizes: ['10', '10.5', '11', '11.5', '12'],
+    colors: ['Black'],
   },
   {
     name: "Air Jordan 4 Retro OG GS 'Bred' 2019",
@@ -28,23 +28,23 @@ export const products: Product[] = [
     countInStock: 7,
     rating: 0.0,
     numReviews: 0,
-    size: ['3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7'],
-    color: ['Black'],
+    sizes: ['3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7'],
+    colors: ['Black'],
   },
   {
     name: "Air Jordan 11 Retro 'Space Jam' 2016",
     image:
       'https://image.goat.com/750/attachments/product_template_pictures/images/008/654/900/original/52015_00.png.png',
     description:
-      "The Air Jordan 11 Retro 'Space Jam' 2016 commemorates the 20th anniversary of the movie 'Space Jam.' The sneaker features a black and concord-white color scheme and was worn by Michael Jordan during the movie and the 1995 NBA Playoffs.",
+      "The Air Jordan 11 Retro 'Space Jam' 2016 commemorates the 20th anniversary of the movie 'Space Jam.' The sneaker features a black and concord-white colors scheme and was worn by Michael Jordan during the movie and the 1995 NBA Playoffs.",
     brand: 'Air Jordan',
     category: 'Running Shoes',
     price: 220.0,
     countInStock: 7,
     rating: 0.0,
     numReviews: 0,
-    size: ['10', '10.5', '11', '11.5', '12'],
-    color: ['Black'],
+    sizes: ['10', '10.5', '11', '11.5', '12'],
+    colors: ['Black'],
   },
   {
     name: "Air Jordan 11 Retro 'Win Like '96'",
@@ -58,23 +58,23 @@ export const products: Product[] = [
     countInStock: 7,
     rating: 0.0,
     numReviews: 0,
-    size: ['10', '10.5', '11', '11.5', '12'],
-    color: ['Red'],
+    sizes: ['10', '10.5', '11', '11.5', '12'],
+    colors: ['Red'],
   },
   {
     name: "Air Jordan 11 Retro 'Legend Blue' 2014",
     image:
       'https://image.goat.com/750/attachments/product_template_pictures/images/010/223/048/original/13607_00.png.png',
     description:
-      "The Air Jordan 11 Retro 'Legend Blue' 2014 features a white and legend blue color scheme. It's a men's sneaker designed by Tinker Hatfield.",
+      "The Air Jordan 11 Retro 'Legend Blue' 2014 features a white and legend blue colors scheme. It's a men's sneaker designed by Tinker Hatfield.",
     brand: 'Air Jordan',
     category: 'Running Shoes',
     price: 200.0,
     countInStock: 7,
     rating: 0.0,
     numReviews: 0,
-    size: ['10', '10.5', '11', '11.5', '12'],
-    color: ['White'],
+    sizes: ['10', '10.5', '11', '11.5', '12'],
+    colors: ['White'],
   },
   {
     name: "Air Jordan 1 Mid 'Multicolor Swoosh Black'",
@@ -88,7 +88,7 @@ export const products: Product[] = [
     rating: 0.0,
     numReviews: 0,
     countInStock: 7,
-    size: [
+    sizes: [
       '10',
       '10.5',
       '11',
@@ -110,6 +110,6 @@ export const products: Product[] = [
       '9',
       '9.5',
     ],
-    color: ['Black'],
+    colors: ['Black'],
   },
 ];

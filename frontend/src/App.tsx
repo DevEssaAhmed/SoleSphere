@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Outlet,
   RouterProvider,
@@ -24,6 +25,16 @@ const AppLayout = () => {
   const location = useLocation();
   const isLoginPage = location.pathname.includes('/login');
   const isSignupPage = location.pathname.includes('/signup');
+
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  }
 
   if (isLoginPage || isSignupPage) {
     return (
@@ -69,6 +80,7 @@ const AppLayout = () => {
         {/* Add more meta tags as needed */}
       </Helmet>
       <Nav />
+      <ScrollToTop />
       <Outlet />
       <Footer />
     </div>
@@ -97,7 +109,7 @@ const appRouter = createBrowserRouter([
         children: [],
       },
       {
-        path: 'products/:slug',
+        path: 'products/:id',
         element: <ProductDetailsPage />,
       },
 

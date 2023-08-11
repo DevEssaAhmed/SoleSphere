@@ -33,7 +33,7 @@ export interface Product {
   countInStock: number;
 
   rating: number;
-  numReviews: number;
+  reviews: Array<string>;
   size: Array<string>;
   color: Array<string>;
 }

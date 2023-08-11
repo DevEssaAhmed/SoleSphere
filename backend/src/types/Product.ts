@@ -22,6 +22,6 @@ export interface Product {
 
   rating: number;
   numReviews: number;
-  size: Array<string>;
-  color: Array<string>;
+  sizes: Array<string>;
+  colors: Array<string>;
 }

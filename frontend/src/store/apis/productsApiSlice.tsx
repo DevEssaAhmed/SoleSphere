@@ -5,6 +5,7 @@ import { PRODUCTS_URL, BASE_URL } from '../../constants';
 
 interface IProduct {
   _id: string;
+  user: string;
   name: string;
   image: string;
   description: string;
@@ -13,9 +14,9 @@ interface IProduct {
   price: number;
   countInStock: number;
   rating: number;
-  numReviews: number;
-  size: Array<string>;
-  color: Array<string>;
+  reviews: Array<string>;
+  sizes: Array<string>;
+  colors: Array<string>;
 }
 
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
@@ -34,9 +35,18 @@ const productsApiSlice = createApi({
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),
+    getProductsDetails: builder.query<IProduct, string>({
+      query: (productId) => ({
+        url: `${PRODUCTS_URL}/${productId}`,
+      }),
+      transformResponse: (response: IProduct) => response,
+      keepUnusedDataFor: 5,
+      providesTags: ['Products'],
+    }),
   }),
 });
 
 // Export the generated hooks and slice
-export const { useGetProductsQuery } = productsApiSlice;
+export const { useGetProductsQuery, useGetProductsDetailsQuery } =
+  productsApiSlice;
 export { productsApiSlice };
