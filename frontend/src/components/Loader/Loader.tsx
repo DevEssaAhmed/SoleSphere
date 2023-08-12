@@ -1,7 +1,7 @@
 const Loader = () => {
   return (
     <div
-      className='animate-spin inline-block w-6 h-6 border-[5px] border-current border-t-transparent text-sm text-gray-400 rounded-full'
+      className='animate-spin block w-8 h-8 border-[5px] border-current border-t-transparent text-sm text-gray-400 rounded-full'
       role='status'
       aria-label='loading'
     >

@@ -13,7 +13,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  console.log(item)
+  // console.log(item)
   const { image, name, price, rating } = item;
 
   return (

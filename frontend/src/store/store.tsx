@@ -4,6 +4,7 @@ import authReducer from './slices/authSlice'; // add this line
 
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { productsApiSlice } from './apis/productsApiSlice';
+import cartSliceReducer from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 
     [productsApiSlice.reducerPath]: productsApiSlice.reducer,
     auth: authReducer, // add this line
+    cart: cartSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productsApiSlice.middleware),

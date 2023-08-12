@@ -12,7 +12,7 @@ const ProductList = ({ sliceCount }) => {
   console.log(data);
 
   if (isLoading) {
-    return <div><Loader/></div>;
+    return <div className='w-screen flex items-center justify-center'><Loader/></div>;
   }
 
   if (isError) {

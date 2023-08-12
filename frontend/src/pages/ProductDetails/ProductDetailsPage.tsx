@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useGetProductsDetailsQuery } from '../../store/apis/productsApiSlice';
 
 import Breadcrumb from '../../components/BreadCrumbs/BreadCrumbs';
 import Loader from '../../components/Loader/Loader';
+import { addToCart } from '../../store/slices/cartSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { toast } from 'react-toastify';
 
 const ProductDetailsPage = () => {
   const { id: productId } = useParams();
@@ -18,11 +21,33 @@ const ProductDetailsPage = () => {
   // State for selected size and color
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState(''); // Set a default color
-
+  const [qty, setQty] = useState(1);
   // Sample data for sizing and colors options
   // const sizes = ['US 7', 'US 8', 'US 9', 'US 10'];
   // const colors = ['Red', 'Blue', 'Green', 'Yellow'];
- 
+  const dispatch = useAppDispatch();
+
+  const qtyForItem = useAppSelector((state) => {
+    const matchingCartItem = state.cart.cartItems.find(
+      (cartItem) => cartItem._id === productId
+    );
+    return matchingCartItem ? matchingCartItem.qty : 0;
+  });
+
+
+  const totalCartQuantity = qtyForItem + qty;
+  const navigate = useNavigate();
+  const addToCartHandler = () => {
+    const newQty = qty + qtyForItem
+    dispatch(
+      addToCart({
+        ...data,
+        qty: newQty,
+      })
+    );
+    toast.success('Item Added to Cart');
+  };
+
   // Product description
   // const description = 'Short product description goes here.';
 
@@ -36,16 +61,18 @@ const ProductDetailsPage = () => {
   // let stockCount: number = 50;
 
   return (
-    <div className='mx-auto'>
+    <div className='mx-auto w-screen'>
       {/* Breadcrumbs */}
       <div className='py-4 mt-8 px-80'>
         <Breadcrumb crumbs={breadcrumbs} />
       </div>
 
       {isLoading ? (
-        <Loader />
+        <div className='mx-auto  flex items-center justify-center'>
+          <Loader />
+        </div>
       ) : (
-        <div className='flex items-center gap-y-4 justify-center flex-col p-6 m-3 bg-white rounded-2xl md:flex-row md:m-0 md:p-16 md:space-x-6 md:gap-12'>
+        <div className='flex items-center gap-y-4 justify-center flex-col p-6 m-3 bg-white rounded-2xl md:flex-row md:m-0 md:p-16 md:pt-0 md:space-x-6 md:gap-12'>
           {/* Image Div */}
           <div>
             <img src={data?.image} alt='' />
@@ -106,42 +133,94 @@ const ProductDetailsPage = () => {
                           : `custom-bg-${color.toLowerCase()}-500`
                       }       
                       
-                      ${color.toLowerCase() === "white" ? "border-black border-4":""}
+                      ${
+                        color.toLowerCase() === 'white'
+                          ? 'border-black border-4'
+                          : ''
+                      }
                       
                       `}
                     ></button>
                   ))}
                 </div>
               </div>
+              {/* Qty Options */}
+              {data.countInStock - qtyForItem > 0  && (
+                <div>
+                  <p className='text-lg font-medium'>Select Quantity:</p>
+                  <div className='flex space-x-4 items-center'>
+                    {data.countInStock > 0 && (
+                      <select
+                        className='border rounded p-1 w-20'
+                        value={qty}
+                        onChange={(e) =>
+                          setQty(
+                            Math.min(Number(e.target.value), data.countInStock)
+                          )
+                        }
+                      >
+                        {Array.from(
+                          {
+                            length: Math.min(
+                              data.countInStock - qtyForItem,
+                              10
+                            ),
+                          },
+                          (_, index) => (
+                            <option key={index} value={index + 1}>
+                              {index + 1}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    )}
+                    <span className='text-gray-600'>
+                      ({data?.countInStock - qtyForItem} pcs. available)
+                    </span>
+                  </div>
+                </div>
+              )}
               {/* Stock */}
               <div className='flex items-center space-x-3 group'>
                 <div
                   className={`w-3 h-3 rounded-full ${
-                    data?.countInStock > 0
+                    data?.countInStock - qtyForItem > 0
                       ? 'bg-green-400 group-hover:animate-ping'
                       : 'bg-red-400'
                   }`}
                 />
                 <div
                   className={`text-sm ${
-                    data?.countInStock > 0 ? 'text-green-400' : 'text-red-400'
+                    data?.countInStock - qtyForItem > 0
+                      ? 'text-green-400'
+                      : 'text-red-400'
                   }`}
                 >
-                  {data?.countInStock > 0
-                    ? `${data?.countInStock} pcs. in stock`
+                  {data?.countInStock - qtyForItem > 0
+                    ? `${data?.countInStock - qtyForItem} pcs. in stock`
                     : 'Out of stock'}
                 </div>
               </div>
               {/* Bottom Buttons Container */}
               <div className='flex flex-col space-y-4 md:space-y-0 md:space-x-4 md:flex-row'>
                 <button
-                  className={`bg-primary w-full flex items-center justify-center py-3 px-5 space-x-3 border-2 border-gray-300 rounded-lg shadow-sm hover:bg-opacity-90 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 ${
-                    data?.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''
+                  className={`bg-primary text-white w-full flex items-center justify-center py-3 px-5 space-x-3 border-2 border-gray-300 rounded-lg shadow-sm hover:bg-opacity-90 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-150 ${
+                    data?.countInStock === 0 ||
+                    totalCartQuantity > data?.countInStock
+                      ? 'opacity-50 cursor-not-allowed'
+                      : ''
                   }`}
-                  disabled={data?.countInStock === 0}
+                  // disabled={data?.countInStock === 0}
+                  disabled={
+                    data?.countInStock === 0 ||
+                    totalCartQuantity > data?.countInStock
+                  }
+                  onClick={addToCartHandler}
                 >
-                  <img className='w-8' />
-                  <span>Add to cart</span>
+                  {/* <img className='w-8' />
+                  <span>Add to cart</span> */}
+                  Add to Cart
+                  <i className='ml-2 fa-solid fa-cart-shopping'></i>
                 </button>
               </div>
             </div>
