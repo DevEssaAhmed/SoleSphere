@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useGetProductsDetailsQuery } from '../../store/apis/productsApiSlice';
 
@@ -36,7 +36,7 @@ const ProductDetailsPage = () => {
 
 
   const totalCartQuantity = qtyForItem + qty;
-  const navigate = useNavigate();
+
   const addToCartHandler = () => {
     const newQty = qty + qtyForItem
     dispatch(

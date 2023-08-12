@@ -5,6 +5,7 @@ import logo from '../../assets/logo.svg';
 import { FaBarsStaggered, FaXmark } from 'react-icons/fa6';
 import ProfileDropDown from '../ProfileDropDown/ProfileDropDown';
 import CartDropDown from '../CartDropdown/CartDropDown';
+import { useAppSelector } from '../../store/hooks';
 
 const navItemLinks = [
   { name: 'Home', type: 'link', href: '/' },
@@ -62,6 +63,8 @@ const Nav = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
+  const { cartItems } = useAppSelector((state) => state.cart);
+
   return (
     <>
       <nav className='sticky top-0 right-0 left-0 bg-white z-50 container mx-auto backdrop-blur-md  px-5  h-20 flex flex-row justify-between items-center '>
@@ -76,9 +79,18 @@ const Nav = () => {
             <FaXmark className='w-6 h-6' onClick={toggleIsMenuOpen} />
           ) : (
             <div className='flex space-x-4'>
-              <Link to='/cart' ref={cartRef} className='hover:text-[#9869ff]'>
+              <Link
+                to='/cart'
+                ref={cartRef}
+                className='hover:text-[#9869ff] relative'
+              >
+                {cartItems.length > 0 && (
+                  <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
+                    {cartItems.reduce((a, c) => a + c.qty, 0)}
+                  </span>
+                )}
                 <i className='fa-solid fa-cart-shopping'></i>
-                {isCartOpen && <CartDropDown />}
+                {/* {isCartOpen && <CartDropDown />} */}
               </Link>
 
               <button className='relative'>
@@ -119,8 +131,13 @@ const Nav = () => {
               <button
                 onClick={toggleIsCartOpen}
                 ref={cartRef}
-                className='hover:text-[#9869ff]'
+                className='hover:text-[#9869ff] relative'
               >
+                {cartItems.length > 0 && (
+                  <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
+                    {cartItems.reduce((a, c) => a + c.qty, 0)}
+                  </span>
+                )}
                 <i className='fa-solid fa-cart-shopping'></i>
                 {isCartOpen && <CartDropDown />}
               </button>
