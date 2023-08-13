@@ -1,14 +1,31 @@
-import { apiSlice } from './apiSlice';
-import { USERS_URL } from '../../constants';
+import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
-export const userApiSlice = apiSlice.injectEndpoints({
+import { USERS_URL, BASE_URL } from '../../constants';
+
+const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
+
+export const userApiSlice = createApi({
+  reducerPath: 'userApiSlice',
+
+  baseQuery,
+  tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({
+    // login: builder.mutation({
+    //   query: (data) => ({
+    //     url: `${USERS_URL}/auth`,
+    //     method: 'POST',
+    //     body: data,
+    //   }),
+    // }),
     login: builder.mutation({
-      query: (data) => ({
-        url: `${USERS_URL}/auth`,
-        method: 'POST',
-        body: data,
-      }),
+      query: (body: { email: string; password: string }) => {
+        return {
+          url: `${USERS_URL}/auth`,
+
+          method: 'post',
+          body,
+        };
+      },
     }),
     register: builder.mutation({
       query: (data) => ({
@@ -55,7 +72,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['User'],
+      // invalidatesTags: ['User']
     }),
   }),
 });

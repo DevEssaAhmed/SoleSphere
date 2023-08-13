@@ -27,9 +27,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
       <div className='flex justify-around items-center w-full'>
         <h3 className='text-primary font-semibold'>${price}</h3>
-        <button className='p-2 text-sm  bg-primary rounded-lg text-white'>
+        {/* <button className='p-2 text-sm  bg-primary rounded-lg text-white'>
           Add to Cart <i className='fa-solid fa-cart-shopping'></i>
-        </button>
+        </button> */}
       </div>
     </div>
   );

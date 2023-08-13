@@ -17,5 +17,8 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "react-click-outside": "^3.0.1"
   }
 }

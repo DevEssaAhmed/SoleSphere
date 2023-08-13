@@ -22,6 +22,8 @@ interface IProduct {
 const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
 
 const productsApiSlice = createApi({
+  reducerPath: 'productsApiSlice',
+
   baseQuery,
   tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({

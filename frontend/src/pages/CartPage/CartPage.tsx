@@ -1,7 +1,13 @@
+import CheckoutItem from '../../components/CheckoutItems/CheckoutItem';
+import { useAppSelector } from '../../store/hooks';
+
 const CartPage = () => {
+  const { cartItems, itemPrice, totalPrice, shippingPrice, taxPrice } =
+    useAppSelector((state) => state.cart);
+
   return (
     <div>
-      <section className='h-screen bg-gray-100 py-12 sm:py-16 lg:py-20'>
+      <section className='h-full bg-gray-100 py-12 sm:py-16 lg:py-20'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex items-center justify-center'>
             <h1 className='text-2xl font-semibold text-gray-900'>Your Cart</h1>
@@ -11,26 +17,32 @@ const CartPage = () => {
               <div className='px-4 py-6 sm:px-8 sm:py-10'>
                 <div className='flow-root'>
                   <ul className='-my-8'>
-                    {/* {cartItems.map((cartItem) => (
-                      <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-                    ))} */}
+                    {cartItems.map((item) => (
+                      <CheckoutItem key={item._id} cartItems={item} />
+                    ))}
                   </ul>
                 </div>
 
                 <div>
                   <div className='mt-6  border-b py-2'>
-                    {/* <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-400">Subtotal</p>
-                      <p className="text-lg font-semibold text-gray-900">
-                        $399.00
+                    <div className='flex items-center justify-between'>
+                      <p className='text-sm text-gray-400'>Subtotal</p>
+                      <p className='text-lg font-semibold text-gray-900'>
+                        ${itemPrice}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-400">Shipping</p>
-                      <p className="text-lg font-semibold text-gray-900">
-                        $8.00
+                    <div className='flex items-center justify-between'>
+                      <p className='text-sm text-gray-400'>Tax</p>
+                      <p className='text-lg font-semibold text-gray-900'>
+                        ${taxPrice}
                       </p>
-                    </div> */}
+                    </div>
+                    <div className='flex items-center justify-between'>
+                      <p className='text-sm text-gray-400'>Shipping</p>
+                      <p className='text-lg font-semibold text-gray-900'>
+                        ${shippingPrice}
+                      </p>
+                    </div>
                   </div>
                   <div className='mt-6 flex items-center justify-between'>
                     <p className='text-md font-medium text-gray-900'>Total</p>
@@ -38,7 +50,7 @@ const CartPage = () => {
                       <span className='text-xs font-normal text-gray-400'>
                         USD
                       </span>
-                      {/* {cartTotal} */}
+                      {totalPrice}
                     </p>
                   </div>
                 </div>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
 import { toast } from 'react-toastify';
 
 import { useLoginMutation } from '../../store/apis/userApiSlice';
@@ -11,11 +13,12 @@ import Logo from '../../assets/logo.svg';
 import Loader from '../../components/Loader/Loader';
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [login, { isLoading }] = useLoginMutation();
-  const { userInfo } = useSelector((state: any) => state.auth);
+
+  const { userInfo } = useAppSelector((state: any) => state.auth);
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -32,6 +35,7 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
+
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (err) {

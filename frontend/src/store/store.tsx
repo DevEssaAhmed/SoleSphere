@@ -1,22 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from './apis/apiSlice';
+
 import authReducer from './slices/authSlice'; // add this line
 
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { productsApiSlice } from './apis/productsApiSlice';
+import { userApiSlice } from './apis/userApiSlice';
 import cartSliceReducer from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
     // users: usersReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
-
+    [userApiSlice.reducerPath]: userApiSlice.reducer,
     [productsApiSlice.reducerPath]: productsApiSlice.reducer,
     auth: authReducer, // add this line
     cart: cartSliceReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(productsApiSlice.middleware),
+  middleware: (getDefaultMiddleware):any =>
+    // getDefaultMiddleware()
+    //   .concat(productsApiSlice.middleware)
+    //   .concat(userApiSlice.middleware),
+
+    getDefaultMiddleware({})
+      .concat([productsApiSlice.middleware])
+      .concat([userApiSlice.middleware]),
+
   devTools: true,
 });
 setupListeners(store.dispatch);
