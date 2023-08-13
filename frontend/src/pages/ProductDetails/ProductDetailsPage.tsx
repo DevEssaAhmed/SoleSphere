@@ -34,11 +34,10 @@ const ProductDetailsPage = () => {
     return matchingCartItem ? matchingCartItem.qty : 0;
   });
 
-
   const totalCartQuantity = qtyForItem + qty;
 
   const addToCartHandler = () => {
-    const newQty = qty + qtyForItem
+    const newQty = qty + qtyForItem;
     dispatch(
       addToCart({
         ...data,
@@ -63,7 +62,7 @@ const ProductDetailsPage = () => {
   return (
     <div className='mx-auto w-screen'>
       {/* Breadcrumbs */}
-      <div className='py-4 mt-8 px-80'>
+      <div className='py-4 mt-8 flex flex-wrap px-4 sm:px-40 md:px-60 lg:px-80'>
         <Breadcrumb crumbs={breadcrumbs} />
       </div>
 
@@ -145,7 +144,7 @@ const ProductDetailsPage = () => {
                 </div>
               </div>
               {/* Qty Options */}
-              {data.countInStock - qtyForItem > 0  && (
+              {data.countInStock - qtyForItem > 0 && (
                 <div>
                   <p className='text-lg font-medium'>Select Quantity:</p>
                   <div className='flex space-x-4 items-center'>

@@ -28,7 +28,7 @@ export const userApiSlice = createApi({
       },
     }),
     register: builder.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USERS_URL}`,
         method: 'POST',
         body: data,
@@ -41,7 +41,7 @@ export const userApiSlice = createApi({
       }),
     }),
     profile: builder.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USERS_URL}/profile`,
         method: 'PUT',
         body: data,
@@ -55,7 +55,7 @@ export const userApiSlice = createApi({
       keepUnusedDataFor: 5,
     }),
     deleteUser: builder.mutation({
-      query: (userId) => ({
+      query: (userId: any) => ({
         url: `${USERS_URL}/${userId}`,
         method: 'DELETE',
       }),
@@ -72,7 +72,7 @@ export const userApiSlice = createApi({
         method: 'PUT',
         body: data,
       }),
-      // invalidatesTags: ['User']
+      // invalidatesTags: ['User'],
     }),
   }),
 });

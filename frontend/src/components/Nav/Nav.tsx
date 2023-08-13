@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ClickOutside from 'react-click-outside';
 
 import logo from '../../assets/logo.svg';
 import { FaBarsStaggered, FaXmark } from 'react-icons/fa6';
+import { FaUserCircle } from 'react-icons/fa';
 import ProfileDropDown from '../ProfileDropDown/ProfileDropDown';
 import CartDropDown from '../CartDropdown/CartDropDown';
 import { useAppSelector } from '../../store/hooks';
@@ -11,7 +11,7 @@ import { useAppSelector } from '../../store/hooks';
 const navItemLinks = [
   { name: 'Home', type: 'link', href: '/' },
   { name: 'Products', type: 'link', href: 'products' },
-  { name: 'Categories', type: 'link' },
+  // { name: 'Categories', type: 'link' },
 ];
 
 const NavItem = ({ name, href }) => {
@@ -32,6 +32,8 @@ const Nav = () => {
   const cartRef = useRef(null);
   const profileRef = useRef(null);
 
+  const { userInfo } = useAppSelector((state) => state.auth);
+
   // useEffect(() => {
   //   const handleOutsideClick = (event) => {
   //     if (
@@ -51,31 +53,6 @@ const Nav = () => {
   //     document.removeEventListener('click', handleOutsideClick);
   //   };
   // }, []);
-
-  // useEffect(() => {
-  //   const handleOutsideClick = (event) => {
-  //     if (
-  //       cartRef.current &&
-  //       !cartRef.current.contains(event.target) &&
-  //       profileRef.current &&
-  //       !profileRef.current.contains(event.target)
-  //     ) {
-  //       setIsProfileOpen(false);
-  //       setIsCartOpen(false);
-  //       // Do not close the cart dropdown when clicking inside it
-  //     } else if ( cartRef.current &&
-  //       cartRef.current.contains(event.target)){
-  //       setIsCartOpen(true);
-
-  //       }
-  //   };
-
-  //   document.addEventListener('click', handleOutsideClick);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleOutsideClick);
-  //   };
-  // }, [isCartOpen]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -118,14 +95,14 @@ const Nav = () => {
 
   return (
     <>
-      <nav className='sticky top-0 right-0 left-0 bg-white z-50 w-full mx-auto backdrop-blur-md  px-20  h-20 flex flex-row justify-between items-center '>
+      <nav className='sticky top-0 right-0 left-0 bg-white z-50 w-full mx-auto backdrop-blur-md px-4  sm:px-20  h-20 flex flex-row justify-between items-center '>
         {/*WideScreen Navigation  */}
 
         <Link to='/'>
           <img className='w-52 hover:scale-105' src={logo} alt='logo' />
         </Link>
 
-        <div className='lg:hidden z-20'>
+        <div className='lg:hidden flex items-center justify-center z-20'>
           {isMenuOpen ? (
             <FaXmark className='w-6 h-6' onClick={toggleIsMenuOpen} />
           ) : (
@@ -141,32 +118,27 @@ const Nav = () => {
                   </span>
                 )}
                 <i className='fa-solid fa-cart-shopping'></i>
-                {/* {isCartOpen && <CartDropDown />} */}
               </Link>
 
-              <button className='relative'>
-                <div
-                  className='cursor-pointer'
-                  ref={profileRef}
-                  onClick={toggleProfile}
-                >
-                  {/* Profile Avatar */}
-                  {/* <img
-                  src='dummy-avatar.png'
-                  alt='Avatar'
-                  className='w-8 h-8 rounded-full'
-                /> */}
-                  <i className='fa-solid fa-user'></i>
-                </div>
-                {isProfileOpen && (
-                  // <div className='absolute right-0 mt-2 bg-white rounded shadow-md'>
-                  //   <ul className='py-2'>
-                  //     <li className='px-4 py-2 hover:bg-gray-100'>Settings</li>
-                  //     <li className='px-4 py-2 hover:bg-gray-100'>Sign Out</li>
-                  //   </ul>
-                  // </div>
-
-                  <ProfileDropDown />
+              <button className='relative inline-block text-left'>
+                {userInfo ? (
+                  <div className='relative inline-block text-left'>
+                    <div
+                      ref={profileRef}
+                      onClick={toggleProfile}
+                      className='flex items-center justify-center text-gray-800 hover:text-primary focus:outline-none'
+                    >
+                      <FaUserCircle className='w-5 h-5' />
+                    </div>
+                    {isProfileOpen && <ProfileDropDown />}
+                  </div>
+                ) : (
+                  <Link
+                    to='/login'
+                    className='text-black hover:text-white rounded-full  border border-primary hover:bg-primary px-4 py-2'
+                  >
+                    Login
+                  </Link>
                 )}
               </button>
               <FaBarsStaggered className='w-6 h-6' onClick={toggleIsMenuOpen} />
@@ -195,30 +167,39 @@ const Nav = () => {
               {isCartOpen && <CartDropDown />}
             </li>
             <li className='ml-5'>
-              <div className='relative'>
-                <button
-                  className='cursor-pointer'
-                  ref={profileRef}
-                  onClick={toggleProfile}
+              {userInfo ? (
+                <div className='relative inline-block text-left'>
+                  <button
+                    ref={profileRef}
+                    onClick={toggleProfile}
+                    className='flex items-center text-gray-800 hover:text-primary focus:outline-none'
+                  >
+                    <span className='mr-2'>{userInfo.name}</span>
+                    <svg
+                      className='w-4 h-4'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M19 9l-7 7-7-7'
+                      ></path>
+                    </svg>
+                  </button>
+                  {isProfileOpen && <ProfileDropDown />}
+                </div>
+              ) : (
+                <Link
+                  to='/login'
+                  className='text-black hover:text-white rounded-full  border border-primary hover:bg-primary px-4 py-2'
                 >
-                  {/* Profile Avatar */}
-                  {/* <img
-                  src='dummy-avatar.png'
-                  alt='Avatar'
-                  className='w-8 h-8 rounded-full'
-                /> */}
-                  <i className='fa-solid fa-user'></i>
-                </button>
-                {isProfileOpen && (
-                  // <div className='absolute right-0 mt-2 bg-white rounded shadow-md'>
-                  //   <ul className='py-2'>
-                  //     <li className='px-4 py-2 hover:bg-gray-100'>Settings</li>
-                  //     <li className='px-4 py-2 hover:bg-gray-100'>Sign Out</li>
-                  //   </ul>
-                  // </div>
-                  <ProfileDropDown />
-                )}
-              </div>
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>

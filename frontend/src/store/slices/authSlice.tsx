@@ -32,32 +32,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthState {
-  name: string | null;
-  token: string | null;
+  // name: string | null;
+  // token: string | null;
+  userInfo: any;
 }
 
-const initialState: AuthState = {
-  name: null,
-  token: null,
+// const initialState: AuthState = {
+//   // name: null,
+//   // token: null,
+//   userInfo: null,
+// };
+
+const initialState = {
+  userInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null,
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (
-      state,
-      action: PayloadAction<{ name: string; token: string }>
-    ) => {
-      state.name = action.payload.name;
-      state.token = action.payload.token;
+    setCredentials: (state, action: PayloadAction<{ userInfo: any }>) => {
+      // state.name = action.payload.name;
+      // state.token = action.payload.token;
+      state.userInfo = action.payload;
       localStorage.setItem('userInfo', JSON.stringify(action.payload));
 
       const expirationTime = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 days
       localStorage.setItem('expirationTime', expirationTime.toString());
     },
     logout: (state) => {
-      state = initialState;
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
     },
   },
 });

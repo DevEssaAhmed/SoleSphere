@@ -125,9 +125,8 @@ const LoginPage = () => {
                   disabled={isLoading}
                   className='flex w-full justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#47B5FF] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                 >
-                  Sign in
+                  {isLoading ? <Loader /> : 'Sign In'}
                 </button>
-                {isLoading && <Loader />}
               </div>
             </form>
 

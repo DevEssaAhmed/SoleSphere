@@ -9,14 +9,16 @@ const ProductList = ({ sliceCount }) => {
   // Receive sliceCount as a prop
   const { data, isLoading, isError } = useGetProductsQuery();
 
-  console.log(data);
-
   if (isLoading) {
-    return <div className='w-screen flex items-center justify-center'><Loader/></div>;
+    return (
+      <div className='w-screen flex items-center justify-center'>
+        <Loader />
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>Error: {isError}</div>;
+    return <div>Error: Network Error{isError}</div>;
   }
   return (
     <div className='flex flex-wrap justify-center items-center'>
