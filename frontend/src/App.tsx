@@ -20,6 +20,7 @@ import SignupPage from './pages/SignupPage/SignupPage';
 import CartPage from './pages/CartPage/CartPage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import Nav from './components/Nav/Nav';
+import PrivateRoute from './utils/PrivateRoute';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const AppLayout = () => {
       <div>
         <ToastContainer
           position='top-center'
-          autoClose={5000}
+          autoClose={3000}
           hideProgressBar
           newestOnTop={false}
           closeOnClick
@@ -117,9 +118,19 @@ const appRouter = createBrowserRouter([
         path: 'cart',
         element: <CartPage />,
       },
+      // {
+      //   path: 'checkout',
+      //   element: <CheckoutPage />,
+      // },
       {
-        path: 'checkout',
-        element: <CheckoutPage />,
+        path: '',
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: 'checkout',
+            element: <CheckoutPage />,
+          },
+        ],
       },
       {
         path: 'login',

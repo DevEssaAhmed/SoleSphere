@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    /* Use Tailwind's responsive classes to adjust width on mobile screens */
+    top: auto;
+    bottom: 2rem;
+    /* Adjust based on your mobile breakpoint */
+    width: 50%; /* Display on half of the screen width */
+    left: 25%; /* Center the container horizontally */
+    right: auto; /* Reset right value */
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -380,13 +391,6 @@
 .custom-bg-gray-900 {
   background-color: #111827;
 }
-
-
-
-
-
-
-
 
 /* Single Shade Color Palette */
 
