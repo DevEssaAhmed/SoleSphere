@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../store/hooks';
 import OrderSummaryItem from './OrderSummaryItem';
 
-const OrderSummary = ({ currentStep }) => {
+const OrderSummary = ({ currentStep, handlePlaceOrder }) => {
   const { cartItems, itemPrice, totalPrice, shippingPrice, taxPrice } =
     useAppSelector((state) => state.cart);
   // More products...
@@ -44,6 +44,7 @@ const OrderSummary = ({ currentStep }) => {
           {currentStep === 3 && (
             <button
               type='submit'
+              onClick={handlePlaceOrder}
               className='w-full rounded-md border border-transparent bg-primary py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'
             >
               Confirm order

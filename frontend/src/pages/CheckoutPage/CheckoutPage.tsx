@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import PersonalDetailsForm from './Form/PersonalDetailsForm';
 import PaymentForm from './Form/PaymentForm';
 import OrderSummary from './Form/OrderSummary';
 import ProgressBar from './Form/StepsProgressBar';
+import ReviewOrder from './Form/ReviewOrder';
 
 import {
   savePaymentMethod,
   saveShippingAddress,
+  clearCartItems,
 } from '../../store/slices/cartSlice';
-import ReviewOrder from './Form/ReviewOrder';
-import { toast } from 'react-toastify';
+import { useCreateOrderMutation } from '../../store/apis/ordersApiSlice';
 
 const StepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
-
-  const dispatch = useAppDispatch();
-
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
 
-  const cart = useAppSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const cart = useAppSelector((state) => state.cart);
+  const user = useAppSelector((state: any) => state.auth.userInfo);
+  const { shippingAddress } = cart;
+
+  const [createOrder] = useCreateOrderMutation();
 
   useEffect(() => {
     if (cart.cartItems.length === 0) {
@@ -98,7 +102,28 @@ const StepForm = () => {
       dispatch(savePaymentMethod(paymentMethod));
       nextStep();
     } else {
-      toast.error('Please selecta Payment Method');
+      toast.error('Please select a Payment Method');
+    }
+  };
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+    try {
+      const order = {
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+        userId: user._id,
+      };
+      console.log(order);
+      const res = await createOrder(order).unwrap();
+      navigate(`/order/${res.id}`);
+      dispatch(clearCartItems());
+    } catch (error) {
+      toast.error(error);
     }
   };
 
@@ -123,7 +148,7 @@ const StepForm = () => {
     },
     {
       title: 'Review Order',
-      component: <ReviewOrder />,
+      component: <ReviewOrder cart={cart} />,
     },
   ];
 
@@ -172,7 +197,10 @@ const StepForm = () => {
             >
               {/* Step Component */}
               {steps[currentStep - 1].component}
-              <OrderSummary currentStep={currentStep} />
+              <OrderSummary
+                currentStep={currentStep}
+                handlePlaceOrder={handlePlaceOrder}
+              />
             </form>
 
             {/* Navigation Buttons */}
@@ -213,14 +241,14 @@ const StepForm = () => {
                   Next
                 </button>
               )} */}
-              {currentStep === steps.length && (
+              {/* {currentStep === steps.length && (
                 <button
                   type='submit'
                   className='px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700'
                 >
                   Confirm Order
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>

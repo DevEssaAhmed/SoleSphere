@@ -18,12 +18,12 @@ export const userApiSlice = createApi({
     //   }),
     // }),
     login: builder.mutation({
-      query: (body: { email: string; password: string }) => {
+      query: (data: any) => {
         return {
           url: `${USERS_URL}/auth`,
 
           method: 'post',
-          body,
+          body: data,
         };
       },
     }),

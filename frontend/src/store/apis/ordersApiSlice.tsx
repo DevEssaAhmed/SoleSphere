@@ -45,19 +45,16 @@ const ordersApiSlice = createApi({
   baseQuery,
   tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({
-    getOrders: builder.query<IOrder[], void>({
-      query: () => ({
+    createOrder: builder.mutation({
+      query: (order) => ({
         url: ORDERS_URL,
-        // You can add query parameters here if needed, like:
-        // params: { keyword, pageNumber },
+        method: 'POST',
+        body: { ...order },
       }),
-      transformResponse: (response: IOrder[]) => response,
-      keepUnusedDataFor: 5,
-      providesTags: ['Products'],
     }),
   }),
 });
 
 // Export the generated hooks and slice
-export const {  } = ordersApiSlice;
+export const { useCreateOrderMutation } = ordersApiSlice;
 export { ordersApiSlice };

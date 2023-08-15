@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import Order, { OrderDocument } from '../models/orderModel';
+import Order from '../models/orderModel';
 
 // @desc    Create a new order
 // @route   POST /api/v1/orders
 // @access  Private
-const addOrderItems = asyncHandler(async (req: any, res: Response) => {
+const addOrderItems = asyncHandler(async (req: any, res: any) => {
   const {
     orderItems,
     shippingAddress,
@@ -14,30 +14,32 @@ const addOrderItems = asyncHandler(async (req: any, res: Response) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    userId,
   } = req.body;
 
-  if (!orderItems || orderItems.length === 0) {
+  if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error('No order items');
+  } else {
+    const orderItemsArray: any = orderItems;
+    const order = new Order({
+      orderItems: orderItemsArray.map((x) => ({
+        ...x,
+        product: x._id,
+        _id: undefined,
+      })),
+      user: userId,
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+    });
+    const createdOrder = await order.save();
+
+    res.status(201).json(createdOrder);
   }
-
-  const order = new Order({
-    orderItems: orderItems.map((x) => ({
-      ...x,
-      product: x._id,
-      _id: undefined,
-    })),
-    user: req.user._id,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  });
-
-  const createdOrder = await order.save();
-  res.status(201).json(createdOrder);
 });
 
 // @desc    Get logged in user orders
