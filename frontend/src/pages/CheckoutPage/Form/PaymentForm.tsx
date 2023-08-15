@@ -1,11 +1,10 @@
-import React from 'react';
-
-const PaymentForm = ({ formFields, setFormField }) => {
+const PaymentForm = ({ paymentMethod, setPaymentMethod }) => {
   const paymentMethods = [
-    { id: 'credit-card', title: 'Credit card' },
-    { id: 'paypal', title: 'PayPal' },
-    { id: 'etransfer', title: 'eTransfer' },
+    { id: 'PayPal', title: 'PayPal or Credit Card' },
+    // { id: 'credit-card', title: 'Credit card' },
+    // { id: 'eTransfer', title: 'eTransfer' },
   ];
+
   return (
     <div className='mt-10 border-t border-gray-200 pt-10'>
       <h2 className='text-lg font-medium text-gray-900'>Payment</h2>
@@ -13,37 +12,49 @@ const PaymentForm = ({ formFields, setFormField }) => {
       <fieldset className='mt-4'>
         <legend className='sr-only'>Payment type</legend>
         <div className='space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10'>
-          {paymentMethods.map((paymentMethod, paymentMethodIdx) => (
-            <div key={paymentMethod.id} className='flex items-center'>
-              {paymentMethodIdx === 0 ? (
+          {paymentMethods.map((paymentMethodArr, _paymentMethodIdx) => (
+            <div key={paymentMethodArr.id} className='flex items-center'>
+              {/* {paymentMethodIdx === 0 ? (
                 <input
-                  id={paymentMethod.id}
-                  name='payment-type'
+                  id={paymentMethodArr.id}
+                  name='paymentMethod'
                   type='radio'
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                   defaultChecked
                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
                 />
               ) : (
                 <input
-                  id={paymentMethod.id}
-                  name='payment-type'
+                  id={paymentMethodArr.id}
+                  name='paymentMethod'
+                  value={paymentMethodArr.id}
                   type='radio'
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                   className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
                 />
-              )}
+              )} */}
 
+              <input
+                id={paymentMethodArr.id}
+                name='paymentMethod'
+                value={paymentMethodArr.id}
+                type='radio'
+                checked={paymentMethod === paymentMethodArr.id}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500'
+              />
               <label
-                htmlFor={paymentMethod.id}
+                htmlFor={paymentMethodArr.id}
                 className='ml-3 block text-sm font-medium text-gray-700'
               >
-                {paymentMethod.title}
+                {paymentMethodArr.title}
               </label>
             </div>
           ))}
         </div>
       </fieldset>
-
-      <div className='mt-6 grid grid-cols-4 gap-y-6 gap-x-4'>
+      {/* <div className='mt-6 grid grid-cols-4 gap-y-6 gap-x-4'>
         <div className='col-span-4'>
           <label
             htmlFor='card-number'
@@ -115,7 +126,7 @@ const PaymentForm = ({ formFields, setFormField }) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

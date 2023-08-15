@@ -30,7 +30,7 @@
 // };
 
 // export default ProgressBar;
-import React from 'react';
+
 
 const ProgressBar = ({ steps, currentStep }) => {
   return (

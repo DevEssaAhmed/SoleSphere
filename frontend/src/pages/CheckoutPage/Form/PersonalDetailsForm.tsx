@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const countryNames = (
   <>
     <option>select country</option>
@@ -258,20 +256,20 @@ const countryNames = (
   </>
 );
 
-const PersonalDetailsForm = () => {
-  const defaultFormFields = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    apartment: '',
-    city: '',
-    country: '',
-    phone: '',
-    state: '',
-    postalCode: '',
-  };
-  const [formFields, setFormFields] = useState(defaultFormFields);
+const PersonalDetailsForm = ({ formFields, setFormFields }) => {
+  // const defaultFormFields = {
+  //   email: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   address: '',
+  //   apartment: '',
+  //   city: '',
+  //   country: '',
+  //   phone: '',
+  //   state: '',
+  //   postalCode: '',
+  // };
+  // const [formFields, setFormFields] = useState(defaultFormFields);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -297,6 +295,7 @@ const PersonalDetailsForm = () => {
           </label>
           <div className='mt-1'>
             <input
+              required
               type='email'
               id='email'
               name='email'
@@ -324,6 +323,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 id='first-name'
                 name='firstName'
@@ -343,6 +343,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 id='last-name'
                 name='lastName'
@@ -362,6 +363,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='address'
                 id='address'
@@ -382,6 +384,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='apartment'
                 id='apartment'
@@ -401,6 +404,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='city'
                 id='city'
@@ -442,6 +446,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='state'
                 id='region'
@@ -462,6 +467,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='postalCode'
                 id='postal-code'
@@ -482,6 +488,7 @@ const PersonalDetailsForm = () => {
             </label>
             <div className='mt-1'>
               <input
+                required
                 type='text'
                 name='phone'
                 id='phone'

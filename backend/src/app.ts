@@ -5,6 +5,7 @@ import cors from 'cors';
 import { notFound, errorHandler } from './middlewares/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
+import orderRoutes from './routes/orderRoutes';
 const app: Express = express();
 
 // Middlewares
@@ -18,6 +19,7 @@ app.use(morgan('dev'));
 // // Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/orders', orderRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

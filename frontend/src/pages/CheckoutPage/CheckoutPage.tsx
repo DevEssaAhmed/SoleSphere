@@ -1,26 +1,53 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+
 import PersonalDetailsForm from './Form/PersonalDetailsForm';
 import PaymentForm from './Form/PaymentForm';
 import OrderSummary from './Form/OrderSummary';
-import StepsProgressBar from './Form/StepsProgressBar';
 import ProgressBar from './Form/StepsProgressBar';
+
+import {
+  savePaymentMethod,
+  saveShippingAddress,
+} from '../../store/slices/cartSlice';
+import ReviewOrder from './Form/ReviewOrder';
+import { toast } from 'react-toastify';
 
 const StepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [formFields, setFormFields] = useState({
-    // Your form fields here
+
+  const dispatch = useAppDispatch();
+
+  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+
+  const cart = useAppSelector((state) => state.cart);
+  const { shippingAddress } = cart;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (cart.cartItems.length === 0) {
+      toast.error('Please add items to cart');
+      navigate('/');
+    }
+  }, [cart.cartItems]);
+
+  const defaultFormFields = {
     email: '',
     firstName: '',
     lastName: '',
     address: '',
     apartment: '',
-    // Other fields...
-    paymentType: '',
-    cardNumber: '',
-    nameOnCard: '',
-    expirationDate: '',
-    cvc: '',
-  });
+    city: '',
+    country: '',
+    phone: '',
+    state: '',
+    postalCode: '',
+  };
+
+  const [shippingAddressFields, setShippingAddressFields] = useState(
+    shippingAddress || defaultFormFields
+  );
 
   const nextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -30,30 +57,74 @@ const StepForm = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const setFormField = (field, value) => {
-    setFormFields((prevFields) => ({ ...prevFields, [field]: value }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here using formFields
   };
 
+  const isValidEmail = (email) => {
+    // Basic email validation using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleShipping = (e) => {
+    e.preventDefault();
+
+    // dispatch(saveShippingAddress({ ...shippingAddressFields }));
+
+    // setCurrentStep((prevStep) => prevStep + 1);
+    // Check if all shipping address fields are filled
+    const isShippingAddressValid = Object.values(shippingAddressFields).every(
+      (value) => value !== ''
+    );
+
+    if (!isShippingAddressValid) {
+      toast.error('Please fill in all the required fields.');
+    } else if (!isValidEmail(shippingAddressFields.email)) {
+      toast.error('Please provide correct email');
+    } else if (shippingAddressFields.country === 'select country') {
+      toast.error('Please provide a country name.');
+    } else {
+      dispatch(saveShippingAddress({ ...shippingAddressFields }));
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
+  };
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+    const isPaymentMethodValid = paymentMethod !== '';
+    if (isPaymentMethodValid) {
+      dispatch(savePaymentMethod(paymentMethod));
+      nextStep();
+    } else {
+      toast.error('Please selecta Payment Method');
+    }
+  };
+
   const steps = [
     {
       title: 'Personal Details',
-      component: <PersonalDetailsForm />,
+      component: (
+        <PersonalDetailsForm
+          formFields={shippingAddressFields}
+          setFormFields={setShippingAddressFields}
+        />
+      ),
     },
     {
       title: 'Payment Method',
       component: (
-        <PaymentForm formFields={formFields} setFormField={setFormField} />
+        <PaymentForm
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+        />
       ),
     },
-    // {
-    //   title: 'Order Summary',
-    //   component: <OrderSummary formFields={formFields} />,
-    // },
+    {
+      title: 'Review Order',
+      component: <ReviewOrder />,
+    },
   ];
 
   return (
@@ -101,7 +172,7 @@ const StepForm = () => {
             >
               {/* Step Component */}
               {steps[currentStep - 1].component}
-              <OrderSummary />
+              <OrderSummary currentStep={currentStep} />
             </form>
 
             {/* Navigation Buttons */}
@@ -115,7 +186,25 @@ const StepForm = () => {
                   Previous
                 </button>
               )}
-              {currentStep < steps.length && (
+              {currentStep === 1 && (
+                <button
+                  type='button'
+                  onClick={handleShipping}
+                  className='px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700'
+                >
+                  Next
+                </button>
+              )}
+              {currentStep === 2 && (
+                <button
+                  type='button'
+                  onClick={handlePayment}
+                  className='px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700'
+                >
+                  Next
+                </button>
+              )}
+              {/* {currentStep < steps.length && (
                 <button
                   type='button'
                   onClick={nextStep}
@@ -123,7 +212,7 @@ const StepForm = () => {
                 >
                   Next
                 </button>
-              )}
+              )} */}
               {currentStep === steps.length && (
                 <button
                   type='submit'

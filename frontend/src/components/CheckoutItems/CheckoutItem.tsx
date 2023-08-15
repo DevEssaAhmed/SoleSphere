@@ -4,7 +4,6 @@ import { addToCart, removeFromCart } from '../../store/slices/cartSlice';
 
 const CheckoutItem = ({ cartItems }) => {
   const { name, price, qty, image } = cartItems;
-  console.log(cartItems);
 
   // const { clearItemFromCart, addItemToCart, removeItemFromCart } =
   //   useContext(CartContext);
@@ -27,12 +26,11 @@ const CheckoutItem = ({ cartItems }) => {
       const updatedItem = { ...cartItems, qty: cartItems.qty - 1 };
       dispatch(addToCart(updatedItem));
     } else {
-    dispatch(removeFromCart(cartItems._id));
-      
+      dispatch(removeFromCart(cartItems._id));
     }
   };
   const clearItemHandler = () => {
-    dispatch(removeFromCart(cartItems._id))
+    dispatch(removeFromCart(cartItems._id));
   };
   return (
     <div>
