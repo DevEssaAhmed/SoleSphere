@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../store/hooks';
 import OrderSummaryItem from './OrderSummaryItem';
 
-const OrderSummary = ({ currentStep, handlePlaceOrder }) => {
+const OrderSummary = ({ currentStep = 1, handlePlaceOrder = undefined }) => {
   const { cartItems, itemPrice, totalPrice, shippingPrice, taxPrice } =
     useAppSelector((state) => state.cart);
   // More products...

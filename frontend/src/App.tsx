@@ -21,6 +21,7 @@ import CartPage from './pages/CartPage/CartPage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import Nav from './components/Nav/Nav';
 import PrivateRoute from './utils/PrivateRoute';
+import OrderPage from './pages/OrderPage/OrderPage';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -129,6 +130,10 @@ const appRouter = createBrowserRouter([
           {
             path: 'checkout',
             element: <CheckoutPage />,
+          },
+          {
+            path: 'order/:id',
+            element: <OrderPage />,
           },
         ],
       },

@@ -52,9 +52,15 @@ const ordersApiSlice = createApi({
         body: { ...order },
       }),
     }),
+    getOrderDetails: builder.query({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
 // Export the generated hooks and slice
-export const { useCreateOrderMutation } = ordersApiSlice;
+export const { useCreateOrderMutation,useGetOrderDetailsQuery } = ordersApiSlice;
 export { ordersApiSlice };

@@ -12,7 +12,6 @@ import ReviewOrder from './Form/ReviewOrder';
 import {
   savePaymentMethod,
   saveShippingAddress,
-  clearCartItems,
 } from '../../store/slices/cartSlice';
 import { useCreateOrderMutation } from '../../store/apis/ordersApiSlice';
 
@@ -118,10 +117,10 @@ const StepForm = () => {
         totalPrice: cart.totalPrice,
         userId: user._id,
       };
-      console.log(order);
+
       const res = await createOrder(order).unwrap();
-      navigate(`/order/${res.id}`);
-      dispatch(clearCartItems());
+
+      navigate(`/order/${res._id}`);
     } catch (error) {
       toast.error(error);
     }
