@@ -11,7 +11,10 @@ import {
 
 const router = express.Router();
 
-router.route('/').post(addOrderItems).get(protect, admin, getAllOrders);
+router
+  .route('/')
+  .post(protect, addOrderItems)
+  .get(protect, admin, getAllOrders);
 
 router.route('/myorders').get(protect, getMyOrders);
 

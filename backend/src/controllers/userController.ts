@@ -52,6 +52,7 @@ const loginController = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
 
+    res.cookie('jwtqi', 121);
     res.json({
       _id: user._id,
       name: user.name,
