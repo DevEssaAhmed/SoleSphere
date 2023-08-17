@@ -7,10 +7,12 @@ import { productsApiSlice } from './apis/productsApiSlice';
 import { userApiSlice } from './apis/userApiSlice';
 import cartSliceReducer from './slices/cartSlice';
 import { ordersApiSlice } from './apis/ordersApiSlice';
+import apiSlice from './apis/apiSlice';
 
 export const store = configureStore({
   reducer: {
     // users: usersReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
     [userApiSlice.reducerPath]: userApiSlice.reducer,
     [productsApiSlice.reducerPath]: productsApiSlice.reducer,
     [ordersApiSlice.reducerPath]: ordersApiSlice.reducer,
@@ -23,6 +25,7 @@ export const store = configureStore({
     //   .concat(userApiSlice.middleware),
 
     getDefaultMiddleware({})
+      .concat([apiSlice.middleware])
       .concat([productsApiSlice.middleware])
       .concat([userApiSlice.middleware])
       .concat([ordersApiSlice.middleware]),

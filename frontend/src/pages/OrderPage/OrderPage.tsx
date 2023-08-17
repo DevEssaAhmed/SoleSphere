@@ -1,18 +1,26 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useGetOrderDetailsQuery } from '../../store/apis/ordersApiSlice';
+import {
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+} from '../../store/apis/ordersApiSlice';
+import { useGetPayPalClientIdQuery } from '../../store/apis/apiSlice';
+
+// @ts-nocheck
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { clearCartItems } from '../../store/slices/cartSlice';
+import {
+  PayPalButtons,
+  SCRIPT_LOADING_STATE,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
+
 import Loader from '../../components/Loader/Loader';
 import OrderSummaryItem from '../CheckoutPage/Form/OrderSummaryItem';
 
-import { useAppDispatch } from '../../store/hooks';
-import { clearCartItems } from '../../store/slices/cartSlice';
-import { useEffect } from 'react';
-
 const OrderPage = () => {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(clearCartItems());
-  }, []);
 
   const { id: orderId } = useParams();
   const {
@@ -21,6 +29,79 @@ const OrderPage = () => {
     isLoading,
     error,
   } = useGetOrderDetailsQuery(orderId);
+
+  const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  const {
+    data: paypal,
+    isLoading: loadingPayPal,
+    error: errorPaypal,
+  } = useGetPayPalClientIdQuery({});
+
+  const { userInfo } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(clearCartItems());
+    if (!errorPaypal && !loadingPayPal && paypal.clientId) {
+      const loadPayPalScript = async () => {
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            clientId: paypal.clientId,
+            currency: 'USD',
+          },
+        });
+
+        // Assuming 'pending' is a valid loading state or status in your context
+        paypalDispatch({
+          type: 'setLoadingStatus',
+          value: 'pending' as SCRIPT_LOADING_STATE,
+        });
+      };
+      if (order && !order.isPaid) {
+        if (!window.paypal) loadPayPalScript();
+      }
+    }
+  }, [order, paypal]);
+
+  const onApprove = (_data, actions) => {
+    return actions.order.capture().then(async function (details) {
+      try {
+        await payOrder({ orderId, details });
+        refetch();
+        toast.success('Payment Successful');
+      } catch (err) {
+        toast.error(err?.data?.message || err.message);
+      }
+    });
+  };
+  const onApproveTest = async () => {
+    await payOrder({ orderId, details: { payer: {} } });
+    refetch();
+    toast.success('Payment Successful');
+  };
+
+  const onError = (err) => {
+    toast.error(err.message);
+  };
+  const createOrder = (_data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: {
+              value: order.totalPrice,
+            },
+          },
+        ],
+      })
+      .then((orderId) => {
+        return orderId;
+      });
+  };
+
   if (isLoading) {
     return (
       <div className='w-screen flex items-center justify-center'>
@@ -32,7 +113,7 @@ const OrderPage = () => {
   if (error) {
     return <div>Error: Network Error {`${error}`}</div>;
   }
-  console.log(order);
+
   return (
     <div className='bg-gray-50 py-16 md:py-24'>
       <h1 className='text-center text-black font-bold text-3xl'>
@@ -69,7 +150,7 @@ const OrderPage = () => {
             <div className='w-full mt-8'>
               {order.isPaid ? (
                 <div className='bg-green-100 text-green-600 py-4 px-8 rounded-md'>
-                  Paid
+                  Paid on {`${new Date()}`}
                 </div>
               ) : (
                 <div className='bg-red-100 text-red-600 py-4 px-8 rounded-md'>
@@ -81,7 +162,9 @@ const OrderPage = () => {
         </div>
         <div className='col-span-1'>
           <div className='mt-10 lg:mt-0'>
-            <h2 className='text-2xl font-medium text-gray-900'>Order summary</h2>
+            <h2 className='text-2xl font-medium text-gray-900'>
+              Order summary
+            </h2>
 
             <div className='mt-4 rounded-lg border border-gray-200 bg-white shadow-sm'>
               <h3 className='sr-only'>Items in your cart</h3>
@@ -116,6 +199,28 @@ const OrderPage = () => {
                   </dd>
                 </div>
               </dl>
+              {!order.isPaid && (
+                <div>
+                  {loadingPay && <Loader />}
+                  {isPending ? (
+                    <Loader />
+                  ) : (
+                    <div className='px-10'>
+                      {/* <button
+                        onClick={onApproveTest}
+                        className='mb-4 bg-black px-4 py-3 text-white w-full rounded-md'
+                      >
+                        Test Pay Order
+                      </button> */}
+                      <PayPalButtons
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                        onError={onError}
+                      ></PayPalButtons>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

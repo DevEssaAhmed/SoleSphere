@@ -67,7 +67,7 @@ const getOrderById = asyncHandler(async (req: any, res: Response) => {
 });
 
 // @desc    Update Order to Paid
-// @route   GET /api/v1/orders/:id/pay
+// @route   PUT /api/v1/orders/:id/pay
 // @access  Private/Admin
 const updateOrderToPaid = asyncHandler(async (req: any, res: Response) => {
   const order = await Order.findById(req.params.id);
@@ -91,7 +91,7 @@ const updateOrderToPaid = asyncHandler(async (req: any, res: Response) => {
 });
 
 // @desc    Update Order to Delivered
-// @route   GET /api/v1/orders/:id/delivered
+// @route   PUT /api/v1/orders/:id/delivered
 // @access  Private
 const updateOrderToDelivered = asyncHandler(async (req: any, res: Response) => {
   const order = await Order.findById(req.params.id);
