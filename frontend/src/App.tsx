@@ -22,6 +22,7 @@ import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import Nav from './components/Nav/Nav';
 import PrivateRoute from './utils/PrivateRoute';
 import OrderPage from './pages/OrderPage/OrderPage';
+import UserProfile from './pages/UserProfile/UserProfile';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -134,6 +135,10 @@ const appRouter = createBrowserRouter([
           {
             path: 'order/:id',
             element: <OrderPage />,
+          },
+          {
+            path: 'profile',
+            element: <UserProfile />,
           },
         ],
       },
