@@ -9,8 +9,8 @@ const CartDropDown = () => {
     useAppSelector((state) => state.cart);
 
   return (
-    <div>
-      <div className=' absolute  top-18 right-8 z-10 mx-auto px-4 sm:px-6 lg:px-8'>
+    <div className='absolute right-0 '>
+      <div className='  z-10 mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='mx-auto mt-8  w-96 max-w-md md:mt-12'>
           <div className='rounded-3xl   bg-white shadow-lg '>
             <div className='px-4 h-80 cart-scroll overflow-y-auto    py-6 sm:px-8 sm:py-10 '>

@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import { FaBarsStaggered, FaXmark } from 'react-icons/fa6';
 import { FaUserCircle } from 'react-icons/fa';
-import ProfileDropDown from '../ProfileDropDown/ProfileDropDown';
+import ProfileDropDown from '../DropDowns/ProfileDropDown';
 import CartDropDown from '../CartDropdown/CartDropDown';
 import { useAppSelector } from '../../store/hooks';
+import AdminDropdown from '../DropDowns/AdminDropdown';
 
 const navItemLinks = [
   { name: 'Home', type: 'link', href: '/' },
@@ -28,38 +29,21 @@ const Nav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   const cartRef = useRef(null);
   const profileRef = useRef(null);
+  const adminRef = useRef(null);
 
   const { userInfo } = useAppSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   const handleOutsideClick = (event) => {
-  //     if (
-  //       cartRef.current &&
-  //       !cartRef.current.contains(event.target) &&
-  //       profileRef.current &&
-  //       !profileRef.current.contains(event.target)
-  //     ) {
-  //       setIsCartOpen(false);
-  //       setIsProfileOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('click', handleOutsideClick);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleOutsideClick);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
       // Check if click was inside cart or profile
       if (
         (cartRef.current && cartRef.current.contains(event.target)) ||
-        (profileRef.current && profileRef.current.contains(event.target))
+        (profileRef.current && profileRef.current.contains(event.target)) ||
+        (adminRef.current && adminRef.current.contains(event.target))
       ) {
         // Click was inside, so do not close anything
         return;
@@ -67,7 +51,9 @@ const Nav = () => {
 
       // Click was outside, so close both profile and cart
       setIsProfileOpen(false);
+
       setIsCartOpen(false);
+      setIsAdminOpen(false);
     };
 
     document.addEventListener('click', handleOutsideClick);
@@ -84,11 +70,18 @@ const Nav = () => {
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
     setIsProfileOpen(false);
+    setIsAdminOpen(false);
   };
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
     setIsCartOpen(false);
+    setIsAdminOpen(false);
+  };
+  const toggleAdmin = () => {
+    setIsAdminOpen(!isAdminOpen);
+    setIsCartOpen(false);
+    setIsProfileOpen(false);
   };
 
   const { cartItems } = useAppSelector((state) => state.cart);
@@ -152,19 +145,21 @@ const Nav = () => {
               <NavItem key={item.name} name={item.name} href={item.href} />
             ))}
             <li className='ml-5 relative'>
-              <button
-                onClick={toggleCart}
-                ref={cartRef}
-                className='hover:text-[#9869ff] relative'
-              >
-                {cartItems.length > 0 && (
-                  <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
-                    {cartItems.reduce((a, c) => a + c.qty, 0)}
-                  </span>
-                )}
-                <i className='fa-solid fa-cart-shopping'></i>
-              </button>
-              {isCartOpen && <CartDropDown />}
+              <div>
+                <button
+                  onClick={toggleCart}
+                  ref={cartRef}
+                  className='hover:text-[#9869ff] relative'
+                >
+                  {cartItems.length > 0 && (
+                    <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
+                      {cartItems.reduce((a, c) => a + c.qty, 0)}
+                    </span>
+                  )}
+                  <i className='fa-solid fa-cart-shopping'></i>
+                </button>
+                {isCartOpen && <CartDropDown />}
+              </div>
             </li>
             <li className='ml-5'>
               {userInfo ? (
@@ -199,6 +194,34 @@ const Nav = () => {
                 >
                   Login
                 </Link>
+              )}
+            </li>
+            <li className='ml-5'>
+              {userInfo && userInfo.isAdmin && (
+                <div className='relative inline-block text-left'>
+                  <button
+                    className='flex items-center text-gray-800 hover:text-primary focus:outline-none'
+                    onClick={toggleAdmin}
+                    ref={adminRef}
+                  >
+                    <span className='mr-2'>Admin</span>
+                    <svg
+                      className='w-4 h-4'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M19 9l-7 7-7-7'
+                      ></path>
+                    </svg>
+                  </button>
+                  {isAdminOpen && <AdminDropdown />}
+                </div>
               )}
             </li>
           </ul>

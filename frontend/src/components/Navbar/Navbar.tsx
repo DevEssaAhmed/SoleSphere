@@ -4,7 +4,7 @@ import logo from '../../assets/logo.svg';
 import CartDropDown from '../CartDropdown/CartDropDown';
 import { FaBars } from 'react-icons/fa';
 
-import ProfileDropDown from '../ProfileDropDown/ProfileDropDown';
+import ProfileDropDown from '../DropDowns/ProfileDropDown';
 
 const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);

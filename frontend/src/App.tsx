@@ -23,6 +23,8 @@ import Nav from './components/Nav/Nav';
 import PrivateRoute from './utils/PrivateRoute';
 import OrderPage from './pages/OrderPage/OrderPage';
 import UserProfile from './pages/UserProfile/UserProfile';
+import AdminRoute from './utils/AdminRoute';
+import OrderListPage from './pages/admin/OrderListPage';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -139,6 +141,16 @@ const appRouter = createBrowserRouter([
           {
             path: 'profile',
             element: <UserProfile />,
+          },
+        ],
+      },
+      {
+        path: 'admin',
+        element: <AdminRoute />,
+        children: [
+          {
+            path: 'orderlist',
+            element: <OrderListPage />,
           },
         ],
       },
