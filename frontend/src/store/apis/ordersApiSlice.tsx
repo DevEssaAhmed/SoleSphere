@@ -58,6 +58,12 @@ const ordersApiSlice = createApi({
       }),
       keepUnusedDataFor: 5,
     }),
+    getMyOrders: builder.query({
+      query: () => ({
+        url: `${ORDERS_URL}/myorders`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     payOrder: builder.mutation<{ orderId: string; details: any }, any>({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
@@ -73,5 +79,6 @@ export const {
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
+  useGetMyOrdersQuery,
 } = ordersApiSlice;
 export { ordersApiSlice };
