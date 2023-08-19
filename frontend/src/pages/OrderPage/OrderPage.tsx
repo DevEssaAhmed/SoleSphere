@@ -37,7 +37,7 @@ const OrderPage = () => {
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-console.log(order)
+
   const {
     data: paypal,
     isLoading: loadingPayPal,

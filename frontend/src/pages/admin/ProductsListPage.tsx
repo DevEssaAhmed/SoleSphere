@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
-import { useGetOrdersQuery } from '../../store/apis/ordersApiSlice';
-import Loader from '../../components/Loader/Loader';
+import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 
-const OrderListPage = () => {
-  const { data, isLoading } = useGetOrdersQuery({});
+import Loader from '../../components/Loader/Loader';
+import { useGetProductsQuery } from '../../store/apis/productsApiSlice';
+
+const ProductsListPage = () => {
+  const { data: products, isLoading} = useGetProductsQuery();
+
+  const handleDelete = (id) => {
+
+  };
 
   return (
     <div className='m-8 md:m-16  md:px-32 items-center justify-center'>
@@ -13,18 +18,17 @@ const OrderListPage = () => {
           <div className='sm:flex-auto'>
             <h1 className='text-xl font-semibold text-gray-900'>Orders</h1>
             <p className='mt-2 text-sm text-gray-700'>
-              A list of all the users in your account including their name,
-              title, email and role.
+              A list of all the products
             </p>
           </div>
-          {/* <div className='mt-4 sm:mt-0 sm:ml-16 sm:flex-none'>
+          <div className='mt-4 sm:mt-0 sm:ml-16 sm:flex-none'>
             <button
               type='button'
-              className='inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto'
+              className='inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto'
             >
-              Add user
+              <FaEdit className='text-white mx-2' /> Add Product
             </button>
-          </div> */}
+          </div>
         </div>
         <div className='mt-8 flex flex-col'>
           <div className='-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8'>
@@ -43,32 +47,34 @@ const OrderListPage = () => {
                         scope='col'
                         className='py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6'
                       >
-                        USER
+                        NAME
                       </th>
                       <th
                         scope='col'
                         className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
                       >
-                        DATE
+                        PRICE
                       </th>
                       <th
                         scope='col'
                         className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
                       >
-                        TOTAL
+                        CATEGORY
                       </th>
                       <th
                         scope='col'
                         className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
                       >
-                        PAID
+                        BRAND
                       </th>
                       <th
                         scope='col'
                         className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                      >
-                        DELIVERED
-                      </th>
+                      ></th>
+                      <th
+                        scope='col'
+                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
+                      ></th>
                     </tr>
                   </thead>
                   {isLoading ? (
@@ -85,37 +91,33 @@ const OrderListPage = () => {
                     </tbody>
                   ) : (
                     <tbody className='divide-y divide-gray-200 bg-white'>
-                      {data.map((order) => (
-                        <tr key={order._id}>
+                      {products.map((product) => (
+                        <tr key={product._id}>
                           <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            {order._id}
+                            {product._id}
                           </td>
                           <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            {order.user && order.user.name}
+                            {product.name}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                            {order.createdAt.substring(0, 10)}
+                            {product.price}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                            {order.totalPrice}
+                            {product.category}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                            {order.isPaid ? (
-                              order.paidAt.substring(0, 10)
-                            ) : (
-                              <FaTimes className='text-red-600' />
-                            )}
+                            {product.brand}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                            {order.isDelivered ? (
-                              order.deliveredAt.substring(0, 10)
-                            ) : (
-                              <FaTimes className='text-red-600' />
-                            )}
+                            <button>
+                              <Link to={`/admin/product/${product._id}`}>
+                                <FaEdit className='text-blue-600' />
+                              </Link>
+                            </button>
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500 hover:text-gray-800'>
-                            <button>
-                              <Link to={`/order/${order._id}`}>Details</Link>
+                            <button onClick={() => handleDelete(product._id)}>
+                              <FaTrash className='text-red-600' />
                             </button>
                           </td>
                         </tr>
@@ -132,4 +134,4 @@ const OrderListPage = () => {
   );
 };
 
-export default OrderListPage;
+export default ProductsListPage;

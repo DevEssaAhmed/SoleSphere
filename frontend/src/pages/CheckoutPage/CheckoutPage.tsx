@@ -112,6 +112,8 @@ const StepForm = () => {
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
+        sizes: cart.sizes,
+        colors: cart.colors,
         itemsPrice: cart.itemPrice,
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,

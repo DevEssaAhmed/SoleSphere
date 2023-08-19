@@ -25,6 +25,7 @@ import OrderPage from './pages/OrderPage/OrderPage';
 import UserProfile from './pages/UserProfile/UserProfile';
 import AdminRoute from './utils/AdminRoute';
 import OrderListPage from './pages/admin/OrderListPage';
+import ProductsListPage from './pages/admin/ProductsListPage';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -151,6 +152,10 @@ const appRouter = createBrowserRouter([
           {
             path: 'orderlist',
             element: <OrderListPage />,
+          },
+          {
+            path: 'products',
+            element: <ProductsListPage />,
           },
         ],
       },

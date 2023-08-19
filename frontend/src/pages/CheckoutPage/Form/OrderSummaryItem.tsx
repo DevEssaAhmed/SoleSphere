@@ -1,6 +1,6 @@
 // import { CartContext } from '../../contexts/cart-context';
 const OrderSummaryItem = ({ cartItems }) => {
-  const { name, price, qty, image } = cartItems;
+  const { name, price, qty, image,colors,sizes} = cartItems;
 
   return (
     <div>
@@ -15,6 +15,8 @@ const OrderSummaryItem = ({ cartItems }) => {
           <div className='sm:col-gap-5 sm:grid sm:grid-cols-2'>
             <div className='pr-8 sm:pr-5'>
               <p className='text-base font-semibold text-gray-900'>{name}</p>
+              <p>Color: {colors}</p>
+              <p>Size: {sizes}</p>
             </div>
             <div className='mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end'>
               <p className='shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right'>

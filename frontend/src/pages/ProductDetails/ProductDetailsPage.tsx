@@ -37,14 +37,22 @@ const ProductDetailsPage = () => {
   const totalCartQuantity = qtyForItem + qty;
 
   const addToCartHandler = () => {
-    const newQty = qty + qtyForItem;
-    dispatch(
-      addToCart({
-        ...data,
-        qty: newQty,
-      })
-    );
-    toast.success('Item Added to Cart');
+    if (selectedColor === '') {
+      toast.error('Please choose a color');
+    } else if (selectedSize === '') {
+      toast.error('Please choose a size');
+    } else {
+      const newQty = qty + qtyForItem;
+      dispatch(
+        addToCart({
+          ...data,
+          qty: newQty,
+          sizes: selectedSize,
+          colors: selectedColor,
+        })
+      );
+      toast.success('Item Added to Cart');
+    }
   };
 
   // Product description
