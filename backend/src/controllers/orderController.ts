@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel';
 
@@ -98,6 +98,7 @@ const updateOrderToDelivered = asyncHandler(async (req: any, res: Response) => {
 
   if (order) {
     order.isDelivered = true;
+    order.deliveredAt = new Date();
 
     const updatedOrder = await order.save();
     res.json(updatedOrder);
@@ -110,9 +111,9 @@ const updateOrderToDelivered = asyncHandler(async (req: any, res: Response) => {
 // @desc    Get all orders
 // @route   GET /api/v1/orders
 // @access  Private/Admin
-const getAllOrders = asyncHandler(async (req: any, res: Response) => {
+const getAllOrders = asyncHandler(async (_req: any, res: Response) => {
   const orders = await Order.find({}).populate('user', 'id name');
-  res.json(orders);
+  res.status(200).json(orders);
 });
 
 export {

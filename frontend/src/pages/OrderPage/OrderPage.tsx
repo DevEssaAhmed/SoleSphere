@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
+  useDeliverOrderMutation,
 } from '../../store/apis/ordersApiSlice';
 import { useGetPayPalClientIdQuery } from '../../store/apis/apiSlice';
 
@@ -30,10 +31,13 @@ const OrderPage = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
+
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
+console.log(order)
   const {
     data: paypal,
     isLoading: loadingPayPal,
@@ -77,10 +81,19 @@ const OrderPage = () => {
       }
     });
   };
-  const onApproveTest = async () => {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
-    toast.success('Payment Successful');
+  // const onApproveTest = async () => {
+  //   await payOrder({ orderId, details: { payer: {} } });
+  //   refetch();
+  //   toast.success('Payment Successful');
+  // };
+  const deliverHandler = async () => {
+    try {
+      await deliverOrder({ orderId });
+      refetch();
+      toast.success('Order Delivered');
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
   const onError = (err) => {
@@ -132,7 +145,7 @@ const OrderPage = () => {
             </h3>
 
             <div className='w-full mt-8'>
-              {order.isDeivered ? (
+              {order.isDelivered ? (
                 <div className='bg-green-100 text-green-600 py-4 px-8 rounded-md'>
                   Delivered
                 </div>
@@ -221,6 +234,22 @@ const OrderPage = () => {
                   )}
                 </div>
               )}
+
+              {loadingDeliver && <Loader />}
+
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <div className='px-10'>
+                    <button
+                      onClick={deliverHandler}
+                      className='mb-4 bg-black px-4 py-3 text-white w-full rounded-md'
+                    >
+                      Mark as Deliver
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
         </div>

@@ -64,11 +64,23 @@ const ordersApiSlice = createApi({
       }),
       keepUnusedDataFor: 5,
     }),
+    getOrders: builder.query({
+      query: () => ({
+        url: `${ORDERS_URL}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     payOrder: builder.mutation<{ orderId: string; details: any }, any>({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
         method: 'PUT',
         body: { ...details },
+      }),
+    }),
+    deliverOrder: builder.mutation<{ orderId: string }, any>({
+      query: ({ orderId }) => ({
+        url: `${ORDERS_URL}/${orderId}/deliver`,
+        method: 'PUT',
       }),
     }),
   }),
@@ -80,5 +92,7 @@ export const {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetMyOrdersQuery,
+  useGetOrdersQuery,
+  useDeliverOrderMutation,
 } = ordersApiSlice;
 export { ordersApiSlice };
