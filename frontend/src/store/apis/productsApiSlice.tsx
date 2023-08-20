@@ -1,7 +1,7 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 // Assuming these constants are defined correctly
-import { PRODUCTS_URL, BASE_URL } from '../../constants';
+import { PRODUCTS_URL, BASE_URL, UPLOAD_URL } from '../../constants';
 
 interface IProduct {
   _id: string;
@@ -58,6 +58,13 @@ const productsApiSlice = createApi({
         body: data,
       }),
     }),
+    uploadProductImage: builder.mutation({
+      query: (data) => ({
+        url: `${UPLOAD_URL}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -67,5 +74,6 @@ export const {
   useGetProductsDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } = productsApiSlice;
 export { productsApiSlice };

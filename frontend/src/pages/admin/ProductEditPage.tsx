@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import {
   useUpdateProductMutation,
   useGetProductsDetailsQuery,
+  useUploadProductImageMutation,
 } from '../../store/apis/productsApiSlice';
 
 import Loader from '../../components/Loader/Loader';
@@ -34,6 +35,9 @@ const ProductEditPage = () => {
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
+
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
 
   const navigate = useNavigate();
 
@@ -91,6 +95,19 @@ const ProductEditPage = () => {
       navigate('/admin/products'); // Redirect to products list page
     }
   };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -123,10 +140,34 @@ const ProductEditPage = () => {
             type='number'
             id='price'
             value={price}
-            onChange={(e:any) => setPrice(e.target.value)}
+            onChange={(e: any) => setPrice(e.target.value)}
             className='w-full border rounded-md p-2'
           />
         </div>
+        <div>
+          <label htmlFor='image' className='block font-medium mb-1'>
+            Image
+          </label>
+          <input
+            type='text'
+            id='image '
+            placeholder='Enter image url'
+            value={image}
+            onChange={() => {
+              setImage;
+            }}
+            className='w-full border rounded-md p-2'
+          />
+
+          <input
+            type='file'
+            id='image '
+            placeholder='Upload File'
+            onChange={uploadFileHandler}
+            className='w-full border rounded-md p-2'
+          />
+        </div>
+
         <div>
           <label htmlFor='brand' className='block font-medium mb-1'>
             Brand
