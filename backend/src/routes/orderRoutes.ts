@@ -9,6 +9,7 @@ import {
   updateOrderToPaid,
 } from '../controllers/orderController';
 
+
 const router = express.Router();
 
 router
@@ -18,7 +19,10 @@ router
 
 router.route('/myorders').get(protect, getMyOrders);
 
-router.route('/:id').get(protect, getOrderById);
+router
+  .route('/:id')
+  .get(protect, getOrderById)
+
 router.route('/:id/pay').put(protect, admin, updateOrderToPaid);
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered);
 

@@ -4,6 +4,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery,
 } from '../../store/apis/productsApiSlice';
 import { toast } from 'react-toastify';
@@ -14,7 +15,19 @@ const ProductsListPage = () => {
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
-  const handleDelete = (id) => {};
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete the product?')) {
+      try {
+        await deleteProduct(id);
+        toast.success('Product Deleted');
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
 
   const createProductHandler = async () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
@@ -32,7 +45,7 @@ const ProductsListPage = () => {
       <div className='px-4 sm:px-6 lg:px-8'>
         <div className='sm:flex sm:items-center'>
           <div className='sm:flex-auto'>
-            <h1 className='text-xl font-semibold text-gray-900'>Orders</h1>
+            <h1 className='text-xl font-semibold text-gray-900'>Products</h1>
             <p className='mt-2 text-sm text-gray-700'>
               A list of all the products
             </p>
