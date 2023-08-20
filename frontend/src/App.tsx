@@ -26,6 +26,7 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import AdminRoute from './utils/AdminRoute';
 import OrderListPage from './pages/admin/OrderListPage';
 import ProductsListPage from './pages/admin/ProductsListPage';
+import ProductEditPage from './pages/admin/ProductEditPage';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -156,6 +157,10 @@ const appRouter = createBrowserRouter([
           {
             path: 'products',
             element: <ProductsListPage />,
+          },
+          {
+            path: 'product/:id/edit',
+            element: <ProductEditPage />,
           },
         ],
       },

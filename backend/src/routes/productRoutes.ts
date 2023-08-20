@@ -3,6 +3,7 @@ import {
   createProduct,
   getAllProducts,
   getSingleProduct,
+  updateProduct,
 } from '../controllers/productController';
 import { protect, admin } from '../middlewares/authMiddleware';
 
@@ -10,6 +11,6 @@ import { protect, admin } from '../middlewares/authMiddleware';
 const router = express.Router();
 
 router.route('/').get(getAllProducts).post(protect, admin, createProduct);
-router.route('/:id').get(getSingleProduct);
+router.route('/:id').get(getSingleProduct).put(protect, admin, updateProduct);
 
 export default router;

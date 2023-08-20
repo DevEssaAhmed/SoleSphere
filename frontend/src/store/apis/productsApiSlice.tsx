@@ -45,10 +45,27 @@ const productsApiSlice = createApi({
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),
+    createProduct: builder.mutation({
+      query: () => ({
+        url: PRODUCTS_URL,
+        method: 'POST',
+      }),
+    }),
+    updateProduct: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data._id}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
 // Export the generated hooks and slice
-export const { useGetProductsQuery, useGetProductsDetailsQuery } =
-  productsApiSlice;
+export const {
+  useGetProductsQuery,
+  useGetProductsDetailsQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} = productsApiSlice;
 export { productsApiSlice };

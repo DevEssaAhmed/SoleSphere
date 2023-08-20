@@ -82,7 +82,7 @@ const ProductDetailsPage = () => {
         <div className='flex items-center gap-y-4 justify-center flex-col p-6 m-3 bg-white rounded-2xl md:flex-row md:m-0 md:p-16 md:pt-0 md:space-x-6 md:gap-12'>
           {/* Image Div */}
           <div>
-            <img src={data?.image} alt='' />
+            <img className='w-[750px]' src={data?.image} alt='' />
           </div>
           {/* Content */}
           <div className='flex flex-col  space-y-6'>

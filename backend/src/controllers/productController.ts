@@ -37,20 +37,57 @@ const getSingleProduct = asyncHandler(
 const createProduct = asyncHandler(async (req: any, res: Response) => {
   const product = new Product({
     name: 'Sample name',
-    price: 0,
+    price: 100,
     user: req.user._id,
-    image: '/images/nike.png',
+    image: '/nike.png',
     brand: 'Sample brand',
     category: 'Sample category',
-    countInStock: 0,
+    countInStock: 1,
     numReviews: 0,
     description: 'Sample description',
     sizes: ['8'],
-    colors: ['black'],
+    colors: ['Red'],
   });
 
   const createProduct = await product.save();
   res.status(201).json(createProduct);
 });
 
-export { getAllProducts, getSingleProduct, createProduct };
+// @desc    Update a product
+// @route   PUT /api/v1/products/:id
+// @access  Private/Admin
+
+const updateProduct = asyncHandler(async (req: any, res: any) => {
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+    sizes,
+    colors,
+  } = req.body;
+
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.image = image;
+    product.brand = brand;
+    product.category = category;
+    product.countInStock = countInStock;
+    product.sizes = sizes;
+    product.colors = colors;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+export { getAllProducts, getSingleProduct, createProduct, updateProduct };

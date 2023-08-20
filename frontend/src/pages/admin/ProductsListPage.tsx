@@ -1,14 +1,30 @@
 import { Link } from 'react-router-dom';
-import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import Loader from '../../components/Loader/Loader';
-import { useGetProductsQuery } from '../../store/apis/productsApiSlice';
+import {
+  useCreateProductMutation,
+  useGetProductsQuery,
+} from '../../store/apis/productsApiSlice';
+import { toast } from 'react-toastify';
 
 const ProductsListPage = () => {
-  const { data: products, isLoading} = useGetProductsQuery();
+  const { data: products, isLoading, refetch } = useGetProductsQuery();
 
-  const handleDelete = (id) => {
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
+  const handleDelete = (id) => {};
+
+  const createProductHandler = async () => {
+    if (window.confirm('Are you sure you want to create a new product?')) {
+      try {
+        await createProduct({});
+        refetch();
+      } catch (error) {
+        toast.error(error?.data.message || error.error);
+      }
+    }
   };
 
   return (
@@ -24,9 +40,16 @@ const ProductsListPage = () => {
           <div className='mt-4 sm:mt-0 sm:ml-16 sm:flex-none'>
             <button
               type='button'
+              onClick={createProductHandler}
               className='inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto'
             >
-              <FaEdit className='text-white mx-2' /> Add Product
+              {loadingCreate ? (
+                <Loader />
+              ) : (
+                <>
+                  <FaEdit className='text-white mx-2' /> Add Product
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -110,7 +133,7 @@ const ProductsListPage = () => {
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
                             <button>
-                              <Link to={`/admin/product/${product._id}`}>
+                              <Link to={`/admin/product/${product._id}/edit`}>
                                 <FaEdit className='text-blue-600' />
                               </Link>
                             </button>
