@@ -10,7 +10,9 @@ export interface ProductDocument extends Document {
   price: number;
   category: string;
   description: string;
+
   reviews: [];
+  numReviews: number;
   rating: number;
   countInStock: number;
   colors: [];
@@ -59,7 +61,7 @@ const productSchema: Schema<ProductDocument> = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true
+      required: true,
     },
     brand: {
       type: String,
@@ -75,6 +77,11 @@ const productSchema: Schema<ProductDocument> = new mongoose.Schema(
     },
     reviews: [reviewSchema],
     rating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    numReviews: {
       type: Number,
       required: true,
       default: 0,

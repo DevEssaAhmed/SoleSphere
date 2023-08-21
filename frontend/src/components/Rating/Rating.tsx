@@ -1,6 +1,6 @@
 import { FaStar, FaRegStar, FaStarHalf } from 'react-icons/fa6';
 
-const Rating = ({ value, text }) => {
+const Rating = ({ value, text='' }) => {
   return (
     <div className='text-primary rating flex items-center justify-center space-x-1'>
       <span>

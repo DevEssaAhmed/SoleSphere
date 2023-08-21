@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { useGetProductsDetailsQuery } from '../../store/apis/productsApiSlice';
+import {
+  useGetProductsDetailsQuery,
+  useCreateReviewMutation,
+} from '../../store/apis/productsApiSlice';
 
 import Breadcrumb from '../../components/BreadCrumbs/BreadCrumbs';
 import Loader from '../../components/Loader/Loader';
@@ -9,10 +12,13 @@ import { addToCart } from '../../store/slices/cartSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toast } from 'react-toastify';
 
+import Rating from '../../components/Rating/Rating';
+
 const ProductDetailsPage = () => {
   const { id: productId } = useParams();
 
-  const { data, isLoading, isError } = useGetProductsDetailsQuery(productId);
+  const { data, isLoading, refetch, isError } =
+    useGetProductsDetailsQuery(productId);
 
   if (isError) {
     return <h1>Error {isError}</h1>;
@@ -22,10 +28,39 @@ const ProductDetailsPage = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState(''); // Set a default color
   const [qty, setQty] = useState(1);
+
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+
   // Sample data for sizing and colors options
   // const sizes = ['US 7', 'US 8', 'US 9', 'US 10'];
   // const colors = ['Red', 'Blue', 'Green', 'Yellow'];
+
   const dispatch = useAppDispatch();
+
+  const { userInfo } = useAppSelector((state) => state.auth);
+
+  // Review mutation
+  const [createReview] = useCreateReviewMutation();
+
+  // Submit review
+  const submitReview = async () => {
+    try {
+      await createReview({
+        productId,
+        rating,
+        comment,
+      }).unwrap();
+      // Optional: You might want to update the product details or reviews here
+      toast.success('Review created successfully');
+      // Clear the review fields
+      setRating(0);
+      setComment('');
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   const qtyForItem = useAppSelector((state) => {
     const matchingCartItem = state.cart.cartItems.find(
@@ -66,6 +101,10 @@ const ProductDetailsPage = () => {
   ];
   // Sample stock count
   // let stockCount: number = 50;
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className='mx-auto w-screen'>
@@ -234,6 +273,93 @@ const ProductDetailsPage = () => {
           </div>
         </div>
       )}
+
+      <div className='max-w-5xl mx-48 bg-gray-50 p-16 rounded-lg'>
+        <h2 className='text-2xl mb-8'>Reviews</h2>
+
+        {data.reviews.length === 0 ? (
+          <div className='bg-blue-100 text-blue-800 py-4 px-8 rounded-md'>
+            No Reviews
+          </div>
+        ) : (
+          <div>
+            {data.reviews.map((review: any) => (
+              <div
+                key={review._id}
+                className='bg-white rounded-lg p-4 shadow-md mb-4'
+              >
+                <div className='flex items-center justify-between mb-2'>
+                  <strong className='text-lg font-semibold'>
+                    {review.name}
+                    <Rating value={review.rating} />
+                  </strong>
+                  <p className='text-gray-500 text-sm'>
+                    {review.createdAt.substring(0, 10)}
+                  </p>
+                </div>
+                <p className='text-gray-700'>{review.comment}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Add your review form */}
+        {/* Refer to the corresponding part of the second snippet */}
+
+        <h2 className='text-2xl my-8'>Write a customer review</h2>
+        {userInfo ? (
+          <>
+            <form>
+              {/* Rating */}
+              <div>
+                <label htmlFor='name' className='block font-medium mb-1'>
+                  Rating
+                </label>
+              </div>
+              <div className='flex items-center space-x-2'>
+                <select
+                  id='rating'
+                  name='rating'
+                  value={rating}
+                  onChange={(e) => setRating(parseInt(e.target.value))}
+                  className='border border-gray-300 px-3 py-1 rounded-md focus:outline-none focus:ring focus:border-blue-300'
+                >
+                  <option value=''>Select...</option>
+                  <option value='1'>1 - Poor</option>
+                  <option value='2'>2 - Fair</option>
+                  <option value='3'>3 - Good</option>
+                  <option value='4'>4 - Very Good</option>
+                  <option value='5'>5 - Excellent</option>
+                </select>
+              </div>
+
+              {/* Comment */}
+              <div>
+                <label htmlFor='name' className='block font-medium mb-1'>
+                  Comment
+                </label>
+                <textarea
+                  id='comment'
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className='w-full border rounded-md p-2'
+                />
+              </div>
+              {/* Submit button */}
+              <button
+                className='mt-4 px-4 py-2 border rounded-md text-white bg-primary border-primary hover:brightness-105'
+                onClick={submitReview}
+              >
+                Submit Review
+              </button>
+            </form>
+          </>
+        ) : (
+          <div>
+            Please <Link to='/login'>sign in</Link> to write a review
+          </div>
+        )}
+      </div>
     </div>
   );
 };
