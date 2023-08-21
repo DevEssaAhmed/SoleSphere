@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
 export const userApiSlice = createApi({
   reducerPath: 'userApiSlice',
   baseQuery,
-  tagTypes: ['Products', 'Order', 'User'],
+  tagTypes: ['Products', 'Orders', 'Users'],
   endpoints: (builder) => ({
     // login: builder.mutation({
     //   query: (data) => ({
@@ -53,7 +53,7 @@ export const userApiSlice = createApi({
       query: () => ({
         url: USERS_URL,
       }),
-      providesTags: ['User'],
+      providesTags: ['Users'],
       keepUnusedDataFor: 5,
     }),
     deleteUser: builder.mutation({
@@ -74,7 +74,7 @@ export const userApiSlice = createApi({
         method: 'PUT',
         body: data,
       }),
-      // invalidatesTags: ['User'],
+      invalidatesTags: ['Users'],
     }),
   }),
 });

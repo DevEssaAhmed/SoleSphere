@@ -27,6 +27,8 @@ import AdminRoute from './utils/AdminRoute';
 import OrderListPage from './pages/admin/OrderListPage';
 import ProductsListPage from './pages/admin/ProductsListPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
+import UserListPage from './pages/admin/UserListPage';
+import UserEditPage from './pages/admin/UserEditPage';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -150,6 +152,14 @@ const appRouter = createBrowserRouter([
         path: 'admin',
         element: <AdminRoute />,
         children: [
+          {
+            path: 'users',
+            element: <UserListPage />,
+          },
+          {
+            path: 'user/:id/edit',
+            element: <UserEditPage />,
+          },
           {
             path: 'orderlist',
             element: <OrderListPage />,
