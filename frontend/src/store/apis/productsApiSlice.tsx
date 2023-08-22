@@ -27,13 +27,13 @@ const productsApiSlice = createApi({
   baseQuery,
   tagTypes: ['Products', 'Order', 'User'],
   endpoints: (builder) => ({
-    getProducts: builder.query<IProduct[], void>({
-      query: () => ({
+    getProducts: builder.query({
+      query: ({ pageNumber }) => ({
         url: PRODUCTS_URL,
         // You can add query parameters here if needed, like:
-        // params: { keyword, pageNumber },
+        params: { pageNumber },
       }),
-      transformResponse: (response: IProduct[]) => response,
+
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),

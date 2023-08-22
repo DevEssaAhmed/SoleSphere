@@ -8,9 +8,12 @@ import {
   useGetProductsQuery,
 } from '../../store/apis/productsApiSlice';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import Paginate from '../../components/Paginate/Paginate';
 
 const ProductsListPage = () => {
-  const { data: products, isLoading, refetch } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+  const { data, isLoading, refetch } = useGetProductsQuery({ pageNumber });
 
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
@@ -127,7 +130,7 @@ const ProductsListPage = () => {
                     </tbody>
                   ) : (
                     <tbody className='divide-y divide-gray-200 bg-white'>
-                      {products.map((product) => (
+                      {data.products.map((product) => (
                         <tr key={product._id}>
                           <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                             {product._id}
@@ -165,6 +168,11 @@ const ProductsListPage = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='mt-8 flex justify-end items-center'>
+        {!isLoading && (
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
+        )}
       </div>
     </div>
   );

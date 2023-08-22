@@ -9,9 +9,30 @@ interface CustomRequest extends Request {
 // @desc    Get all products
 // @route   GET /api/v1/products
 // @access  Public
-const getAllProducts = asyncHandler(async (_req, res: Response) => {
-  const products = await Product.find({});
-  res.json(products);
+// const getAllProducts = asyncHandler(async (_req, res: Response) => {
+//   const products = await Product.find({});
+//   res.json(products);
+// });
+
+const getAllProducts = asyncHandler(async (req, res) => {
+  const pageSize = Number(process.env.PAGINATION_LIMIT);
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Get single product
@@ -152,7 +173,14 @@ const createProductReview = asyncHandler(async (req: any, res: any) => {
     throw new Error('Product not found');
   }
 });
+// @desc    Get top rated products
+// @route   GET /api/products/top
+// @access  Public
+const getTopProducts = asyncHandler(async (_req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
 
+  res.json(products);
+});
 export {
   getAllProducts,
   getSingleProduct,
@@ -160,4 +188,5 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
+  getTopProducts,
 };
