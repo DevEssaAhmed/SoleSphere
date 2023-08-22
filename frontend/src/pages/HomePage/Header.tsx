@@ -30,7 +30,7 @@ const Header = () => {
         <LogoSlider />
       </div>
 
-      <div className='flex flex-wrap sm:flex-row   justify-evenly mx-auto sm:p-8 p-0  sm:m-4  text-center container'>
+      <div className='flex flex-wrap sm:flex-row   justify-evenly mx-auto sm:p-8 p-0  sm:m-4  text-center '>
         <div className='flex items-center  '>
           <div className='w-12 h-12  md:w-16 md:h-16 flex items-center justify-center bg-primary rounded-md m-2 md:m-4'>
             <i className='fa-solid fa-shield text-white fa-lg md:fa-2xl'></i>

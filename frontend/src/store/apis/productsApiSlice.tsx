@@ -37,6 +37,14 @@ const productsApiSlice = createApi({
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),
+    getTopProducts: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/top`,
+      }),
+
+      keepUnusedDataFor: 5,
+      providesTags: ['Products'],
+    }),
     getProductsDetails: builder.query<IProduct, string>({
       query: (productId) => ({
         url: `${PRODUCTS_URL}/${productId}`,
@@ -90,5 +98,6 @@ export const {
   useUploadProductImageMutation,
   useDeleteProductMutation,
   useCreateReviewMutation,
+  useGetTopProductsQuery,
 } = productsApiSlice;
 export { productsApiSlice };
