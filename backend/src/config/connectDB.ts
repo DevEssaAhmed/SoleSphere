@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const DB: string = process.env.MONGO_URI;
 
@@ -15,18 +17,6 @@ const connectDB = async () => {
 };
 
 export { connectDB };
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const startServer = async () => {
 //   try {

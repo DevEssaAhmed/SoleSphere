@@ -5,7 +5,6 @@ import {
   createBrowserRouter,
   useLocation,
 } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -60,11 +59,7 @@ const AppLayout = () => {
           pauseOnHover
           theme='light'
         />
-        <Helmet>
-          <title>SoleSphere</title>
-          <meta name='description' content='curated sneakers store' />
-          {/* Add more meta tags as needed */}
-        </Helmet>
+
         <Outlet />
       </div>
     );
@@ -83,11 +78,7 @@ const AppLayout = () => {
         pauseOnHover
         theme='light'
       />
-      <Helmet>
-        <title>SoleSphere</title>
-        <meta name='description' content='curated sneakers store' />
-        {/* Add more meta tags as needed */}
-      </Helmet>
+
       <Nav />
       <ScrollToTop />
       <Outlet />

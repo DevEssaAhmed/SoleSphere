@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toast } from 'react-toastify';
 
 import Rating from '../../components/Rating/Rating';
+import Meta from '../../components/Meta/Meta';
 
 const ProductDetailsPage = () => {
   const { id: productId } = useParams();
@@ -108,6 +109,7 @@ const ProductDetailsPage = () => {
 
   return (
     <div className='mx-auto w-screen'>
+      <Meta title={data.name} />
       {/* Breadcrumbs */}
       <div className='py-4 mt-8 flex flex-wrap px-4 sm:px-40 md:px-60 lg:px-80'>
         <Breadcrumb crumbs={breadcrumbs} />
@@ -291,7 +293,7 @@ const ProductDetailsPage = () => {
                 <div className='flex items-center justify-between mb-2'>
                   <strong className='text-lg font-semibold'>
                     {review.name}
-                    <Rating value={review.rating} />
+                    <Rating value={review.rating} text={review.rating} />
                   </strong>
                   <p className='text-gray-500 text-sm'>
                     {review.createdAt.substring(0, 10)}

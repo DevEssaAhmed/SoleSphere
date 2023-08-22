@@ -29,7 +29,7 @@ const ProductEditPage = () => {
   const {
     data: product,
     isLoading,
-    refetch,
+
     error,
   } = useGetProductsDetailsQuery(productId);
 

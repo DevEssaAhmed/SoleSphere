@@ -3,7 +3,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 
 import { useGetTopProductsQuery } from '../../store/apis/productsApiSlice';
 import Header from './Header';
-import BannerImg from '../../assets/banner.png';
+
 import Carousel from './Carousel';
 
 const HomePage = () => {

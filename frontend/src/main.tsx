@@ -3,14 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import axios from 'axios';
+
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { PAYPAL_URL } from './constants';
+import { HelmetProvider } from 'react-helmet-async';
 
-axios.defaults.baseURL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : '/';
+// axios.defaults.baseURL =
+//   process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : '/';
 
 // Fetch function to get PayPal client ID
 // async function fetchPaypalClientId() {
@@ -30,16 +31,18 @@ axios.defaults.baseURL =
 // const clientId = await fetchPaypalClientId();
 
 const initialOptions = {
-  clientId: "",
+  clientId: '',
   currency: 'USD',
 };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PayPalScriptProvider options={initialOptions} deferLoading={true}>
-        <App />
-      </PayPalScriptProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PayPalScriptProvider options={initialOptions} deferLoading={true}>
+          <App />
+        </PayPalScriptProvider>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
