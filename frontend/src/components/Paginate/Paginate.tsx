@@ -51,7 +51,7 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
                   !isAdmin
                     ? keyword
                       ? `/search/${keyword}/page/${nextPage}`
-                      : `/page/${nextPage}`
+                      : `/products/page/${nextPage}`
                     : `/admin/products/${nextPage}`
                 }
                 className='px-3 py-2 rounded text-primary hover:bg-purple-200'

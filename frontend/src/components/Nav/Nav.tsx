@@ -8,6 +8,7 @@ import ProfileDropDown from '../DropDowns/ProfileDropDown';
 import CartDropDown from '../CartDropdown/CartDropDown';
 import { useAppSelector } from '../../store/hooks';
 import AdminDropdown from '../DropDowns/AdminDropdown';
+import SearchBox from '../SearchBox/SearchBox';
 
 const navItemLinks = [
   { name: 'Home', type: 'link', href: '/' },
@@ -94,53 +95,60 @@ const Nav = () => {
         <Link to='/'>
           <img className='w-52 hover:scale-105' src={logo} alt='logo' />
         </Link>
+        <div>
+          <div className='lg:hidden flex items-center justify-center z-20'>
+            {isMenuOpen ? (
+              <FaXmark className='w-6 h-6' onClick={toggleIsMenuOpen} />
+            ) : (
+              <div className='flex space-x-4'>
+                <Link
+                  to='/cart'
+                  ref={cartRef}
+                  className='hover:text-[#9869ff] relative'
+                >
+                  {cartItems.length > 0 && (
+                    <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
+                      {cartItems.reduce((a, c) => a + c.qty, 0)}
+                    </span>
+                  )}
+                  <i className='fa-solid fa-cart-shopping'></i>
+                </Link>
 
-        <div className='lg:hidden flex items-center justify-center z-20'>
-          {isMenuOpen ? (
-            <FaXmark className='w-6 h-6' onClick={toggleIsMenuOpen} />
-          ) : (
-            <div className='flex space-x-4'>
-              <Link
-                to='/cart'
-                ref={cartRef}
-                className='hover:text-[#9869ff] relative'
-              >
-                {cartItems.length > 0 && (
-                  <span className='flex items-center justify-center text-center text-sm absolute -top-5 -right-2 rounded-full  h-5 w-5 bg-primary text-white'>
-                    {cartItems.reduce((a, c) => a + c.qty, 0)}
-                  </span>
-                )}
-                <i className='fa-solid fa-cart-shopping'></i>
-              </Link>
-
-              <button className='relative inline-block text-left'>
-                {userInfo ? (
-                  <div className='relative inline-block text-left'>
-                    <div
-                      ref={profileRef}
-                      onClick={toggleProfile}
-                      className='flex items-center justify-center text-gray-800 hover:text-primary focus:outline-none'
-                    >
-                      <FaUserCircle className='w-5 h-5' />
+                <button className='relative inline-block text-left'>
+                  {userInfo ? (
+                    <div className='relative inline-block text-left'>
+                      <div
+                        ref={profileRef}
+                        onClick={toggleProfile}
+                        className='flex items-center justify-center text-gray-800 hover:text-primary focus:outline-none'
+                      >
+                        <FaUserCircle className='w-5 h-5' />
+                      </div>
+                      {isProfileOpen && <ProfileDropDown />}
                     </div>
-                    {isProfileOpen && <ProfileDropDown />}
-                  </div>
-                ) : (
-                  <Link
-                    to='/login'
-                    className='text-black hover:text-white rounded-full  border border-primary hover:bg-primary px-4 py-2'
-                  >
-                    Login
-                  </Link>
-                )}
-              </button>
-              <FaBarsStaggered className='w-6 h-6' onClick={toggleIsMenuOpen} />
-            </div>
-          )}
+                  ) : (
+                    <Link
+                      to='/login'
+                      className='text-black hover:text-white rounded-full  border border-primary hover:bg-primary px-4 py-2'
+                    >
+                      Login
+                    </Link>
+                  )}
+                </button>
+                <FaBarsStaggered
+                  className='w-6 h-6'
+                  onClick={toggleIsMenuOpen}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className='items-center hidden lg:block'>
           <ul className={`items-center ml-5   flex `}>
+            <li>
+              <SearchBox />
+            </li>
             {navItemLinks.map((item) => (
               <NavItem key={item.name} name={item.name} href={item.href} />
             ))}
@@ -241,6 +249,9 @@ const Nav = () => {
           </ul>
         </div>
       </nav>
+      <div className='md:hidden mx-auto flex justify-center items-center'>
+        <SearchBox />
+      </div>
     </>
   );
 };

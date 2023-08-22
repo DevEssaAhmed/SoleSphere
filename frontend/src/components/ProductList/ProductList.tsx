@@ -7,9 +7,11 @@ import Loader from '../Loader/Loader';
 import Paginate from '../Paginate/Paginate';
 
 const ProductList = ({ sliceCount }) => {
-  const { pageNumber } = useParams();
-  // Receive sliceCount as a prop
-  const { data, isLoading, isError } = useGetProductsQuery({ pageNumber });
+  const { pageNumber, keyword } = useParams();
+  const { data, isLoading, isError } = useGetProductsQuery({
+    pageNumber,
+    keyword,
+  });
 
   if (isLoading) {
     return (
@@ -22,11 +24,19 @@ const ProductList = ({ sliceCount }) => {
   if (isError) {
     return <div>Error: Network Error{isError}</div>;
   }
+
+  if (data.products.length === 0) {
+    return (
+      <div className='max-w-5xl py-6 px-4 rounded-lg mx-auto bg-red-50 text-red-600 '>
+        No results found for '{keyword}'
+      </div>
+    );
+  }
+
   return (
     <>
       <div className='flex flex-wrap justify-center items-center'>
         {data.products.slice(0, sliceCount).map((item) => {
-          // Use sliceCount prop here
           return (
             <div className='m-16' key={item._id}>
               <Link to={`/products/${item._id}`}>
@@ -37,8 +47,11 @@ const ProductList = ({ sliceCount }) => {
         })}
       </div>
       <div className='flex items-center justify-center'>
-
-      <Paginate pages={data.pages} page={data.page} />
+        <Paginate
+          pages={data.pages}
+          page={data.page}
+          keyword={keyword ? keyword : ''}
+        />
       </div>
     </>
   );

@@ -29,7 +29,6 @@ import ProductsListPage from './pages/admin/ProductsListPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import UserListPage from './pages/admin/UserListPage';
 import UserEditPage from './pages/admin/UserEditPage';
-import path from 'path';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -176,12 +175,22 @@ const appRouter = createBrowserRouter([
             children: [
               {
                 path: ':pageNumber',
-              }
-            ]
+              },
+            ],
           },
           {
             path: 'product/:id/edit',
             element: <ProductEditPage />,
+          },
+        ],
+      },
+      {
+        path: 'search/:keyword',
+        element: <ProductPage />,
+        children: [
+          {
+            path: 'page/:pageNumber',
+            element: <ProductPage />,
           },
         ],
       },
